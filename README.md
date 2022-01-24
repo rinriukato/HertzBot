@@ -2,6 +2,7 @@
 
 ## Preface
 This is HertzBot, a custom discord bot made for my private servers. Does mostly funny things. Hertz is currently run on python but a converstion to JS is happening eventually
+**DO NOT DISTRIBUTE**
 
 ## Features
 Hertz (at its current state) mostly ping pongs replies with its commands.
