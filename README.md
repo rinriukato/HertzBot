@@ -47,6 +47,7 @@ Chain Level 0 represents the default chain level with no active chains are on-go
 Chain Level MAX (or 5) represents the chain level, and signify that the chain will automatically end
 
 Chain can be broken by the following conditions:
+
 **IF THERE IS NO CHAIN ONGOING**
 * Users reply +2|-2 to a different message
 
