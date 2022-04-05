@@ -49,6 +49,7 @@ Chain Level MAX (or 5) represents the chain level, and signify that the chain wi
 Chain can be broken by the following conditions:
 **IF THERE IS NO CHAIN ONGOING**
 * Users reply +2|-2 to a different message
+
 **IF THERE IS A CHAIN ONGOING**
 * Replying +2|-2 to a different user than the target user
 * Replying +2|-2 to a different message but the same target user
