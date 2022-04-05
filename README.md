@@ -43,6 +43,21 @@ Here is a table listing all the chain attack properties at each level
 | 4  | 2.5x | 3 minutes| 9 |
 | MAX | 3.0 | 1 minutes| 12|
 
+Chain Level 0 represents the default chain level with no active chains are on-going
+Chain Level MAX (or 5) represents the chain level, and signify that the chain will automatically end
+
+Chain can be broken by the following conditions:
+**IF THERE IS NO CHAIN ONGOING**
+* Users reply +2|-2 to a different message
+**IF THERE IS A CHAIN ONGOING**
+* Replying +2|-2 to a different user than the target user
+* Replying +2|-2 to a different message but the same target user
+* Failing to reply +2|-2 within the time range
+* Failing to reply in the same channel (Although you current can only reply to messages in the same channel. A bit of future proofing in case discord changes that rule)
+
+## Closing Remarks
+The points are ultimately meaningless as they currently have no real value or usage within the box context. Just have fun and mess around with it.
+
 ## TASK LIST
 - [x] Add database intergration with Hertz
 - [x] Develop basis for +2|-2 System
