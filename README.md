@@ -13,7 +13,7 @@ Hertz (at its current state) mostly ping pongs replies with its commands.
 
 ## +2 | -2 System
 
-More or less a reference to this ![jerma video](https://www.youtube.com/watch?v=KSp3Q_jvGGs) and its community. But with its own twist inspired from the series Xenoblade Chronicles.
+More or less a reference to this [jerma video](https://www.youtube.com/watch?v=KSp3Q_jvGGs) and its community. But with its own twist inspired from the series Xenoblade Chronicles.
 
 In essence, +2|-2 is a score (and limited to only those two values) given in reponse to how funny (or cool) a person's post was. Say if a person said a funny joke or posted something neat. You, the user, would reply "+2". Likewise if the person said something unfunny. You would reply "-2".
 
@@ -24,7 +24,7 @@ Users can see their scores when inputting the command:
 
 To prevent the usage of inflating another user's score. There is an internal cooldown for each person to say "+2" or "-2" and actively affect another's score. In this current implementation, that cooldown is set to *1 day*. This will ideally encourage the more sparse and careful usage of a +2|-2 while making the chain system more likely to be interacted with.
 
-# Chain System
+### Chain System
 Inspired from the chain system in Xenoblade chronicles, where party members go in order and continuously attack an enemy, with each blow dealing a huge amount of damage as the chain continues.
 
 Users will be encourage to save their +2|-2 for multiple users to "chain" another users with either +2 or -2.
@@ -42,7 +42,8 @@ Here is a table listing all the chain attack properties at each level
 | 4  | 2.5x | 3 minutes| 9 |
 | MAX | 3.0 | 1 minutes| 12|
 
-## TO DOS
-* Add admin level commands for changing on a server basis the chain attack properties
-* Soda machine embed with data aggregating for fun statistics across multiple servers
-
+## TASK LIST
+- [x] Add database intergration with Hertz
+- [x] Develop basis for +2|-2 System
+- [ ] Add admin level commands for changing on a server basis the chain attack properties
+- [ ] Soda machine embed with data aggregating for fun statistics across multiple servers
