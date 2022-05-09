@@ -11,7 +11,7 @@ load_dotenv()
 LOGIN = os.getenv('TOKEN')
 DB_PASS = os.getenv('DB_PASSWORD')
 CONNECTION_STRING = f"mongodb+srv://rinri_hertzbot:{DB_PASS}@hertzbot.xkk4h.mongodb.net/hertzbot?retryWrites=true&w=majority"
-OWNER_ID = int(os.getenv('OWNER_ID'))
+OWNER_ID = os.getenv('OWNER_ID')
 
 # Set bot's user ID
 HERTZ_BOT = discord.Client()
