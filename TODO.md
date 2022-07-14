@@ -1,0 +1,11 @@
+# STUFF I NEED TO BUILD
+- [ ] Thanks roll
+- [ ] Something????
+- [ ] Remake Milkis functionality
+- [ ] Remake basic message handling from python
+- [ ] Have a "quote" storage featuring database adding, and message searching
+- [ ] Basic game interaction: RPS and the like for added points
+- [ ] Soda Machine / Shop Options
+- [ ] Funny +2 / -2 Rating system
+- [ ] Admin controls such as enabling the system on the server
+- [ ] User opting in or out to the twos system
