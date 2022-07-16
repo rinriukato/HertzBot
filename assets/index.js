@@ -1,3 +1,7 @@
-const emotes = require('../assets/emotes.js');
+const emotes = require('../assets/emotes');
+const gifs = require('../assets/gif')
 
-module.exports = {emotes};
+module.exports = {
+    emotes,
+    gifs,
+};
