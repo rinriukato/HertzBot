@@ -64,7 +64,7 @@ The points are ultimately meaningless as they currently have no real value or us
 - [x] Add database intergration with Hertz
 - [x] Develop basis for +2|-2 System
 - [x] Thanks roll
-- [ ] Remake Milkis functionality
+- [x] Remake Milkis functionality
 - [x] Remake basic message handling from python
 - [ ] Have a "quote" storage featuring database adding, and message searching
 - [ ] Basic game interaction: RPS and the like for added points
