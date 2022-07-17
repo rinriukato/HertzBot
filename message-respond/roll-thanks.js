@@ -9,7 +9,7 @@ const replies = [
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
-  }
+}
   
 async function rollThanks (message) {
     for (let i = 0; i < 3; i++) {
