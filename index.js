@@ -2,6 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Intents, Collection } = require('discord.js');
+const mongoose = require('mongoose');
 const { token } = require('./config.json');
 
 // New client instance
