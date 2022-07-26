@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const schema = new mongoose.Schema({
+
+const serverSchema = new mongoose.Schema({
     "server_id": {
         type: Number,
         required: true
@@ -57,4 +58,4 @@ const schema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('testing', schema)
+module.exports = mongoose.model('serverData', serverSchema)

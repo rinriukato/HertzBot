@@ -2,6 +2,7 @@ const { rollThanks } = require('../message-respond/roll-thanks');
 const { requestSoda, giveSoda } = require('../message-respond/give-milkis');
 const { sendChristmas } = require('../message-respond/send-christmas');
 const { sendHalloween } = require('../message-respond/send-halloween')
+const { twosSystem } = require('../message-respond/twos-system');
 
 module.exports = {
 	name: 'messageCreate',
@@ -14,6 +15,10 @@ module.exports = {
 
 		// Chance reply "Welcome" to any thank you
 		if (message.content.toLowerCase().includes("thank")) {
+			if (message.content.toLowerCase().includes('hertz')) {
+				message.reply('No problem :)');
+				return;
+			}
 			await rollThanks(message);
 			return;
 		}
@@ -33,6 +38,12 @@ module.exports = {
 		// User says: "Tomorrow is halloween!"
 		if (message.content.toLowerCase().includes('tomorrow is halloween')) {
 			await sendHalloween(message);
+			return;
+		}
+
+		// User sends a +2 / -2 to another user
+		if (message.reference != null && (message.content === '+2' || message.content ==='-2')) {
+			await twosSystem(message);
 			return;
 		}
 	},

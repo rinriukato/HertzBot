@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const schema = new mongoose.Schema({
+
+const userSchema = new mongoose.Schema({
     "user_id": {
         type: Number,
         required: true,
@@ -12,8 +13,12 @@ const schema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    "guild_name": {
+        type: String,
+        required: true
+    },
     "scores": {
-        "postive_score": {type: Number, default: 0},
+        "positive_score": {type: Number, default: 0},
         "rinri_positive_score": {type: Number, default: 0},
         "negative_score": {type: Number, default: 0},
         "rinri_negative_score": {type: Number, default: 0},
@@ -32,4 +37,4 @@ const schema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('testing', schema)
+module.exports = mongoose.model('userData', userSchema)
