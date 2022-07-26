@@ -29,7 +29,7 @@ async function createNewUserEntry(userId, userName, guildId, guildName) {
     })
 
     await newUserEntry.save();
-    console.log(`Created new mentioned user ${user_id}`);
+    console.log(`Created new mentioned user ${userId}`);
     return newUserEntryl
 }
 

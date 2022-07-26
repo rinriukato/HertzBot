@@ -69,6 +69,7 @@ The points are ultimately meaningless as they currently have no real value or us
 - [ ] Have a "quote" storage featuring database adding, and message searching
 - [X] Basic game interaction: RPS and the like for added points
 - [X] Soda Machine / Shop Options
+- [ ] Create a cooldown mechanism when requesting drinks, to prevent spam and overrunning database writing
 - [ ] Funny +2 / -2 Rating system
 - [ ] Admin controls such as enabling the system on the server
 - [ ] User opting in or out to the twos system

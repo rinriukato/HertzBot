@@ -50,10 +50,11 @@ const serverSchema = new mongoose.Schema({
         "favorite_drink": {type: String, default: ''},
         "milkis": {type: Number, default: 0},
         "tea": {type: Number, default: 0},
+        "bubble_tea": {type: Number, default: 0},
         "milk": {type: Number, default: 0},
         "coffee": {type: Number, default: 0},
         "juice": {type: Number, default: 0},
-        "soda": {type: Number, default: 0},
+        "cola": {type: Number, default: 0},
         "water": {type: Number, default: 0},
     }
 })
