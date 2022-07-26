@@ -67,8 +67,8 @@ The points are ultimately meaningless as they currently have no real value or us
 - [x] Remake Milkis functionality
 - [x] Remake basic message handling from python
 - [ ] Have a "quote" storage featuring database adding, and message searching
-- [ ] Basic game interaction: RPS and the like for added points
-- [ ] Soda Machine / Shop Options
+- [X] Basic game interaction: RPS and the like for added points
+- [X] Soda Machine / Shop Options
 - [ ] Funny +2 / -2 Rating system
 - [ ] Admin controls such as enabling the system on the server
 - [ ] User opting in or out to the twos system

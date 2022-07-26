@@ -1,5 +1,5 @@
 const { rollThanks } = require('../message-respond/roll-thanks');
-const { requestSoda, giveSoda } = require('../message-respond/give-milkis');
+const { requestDrink, giveDrink } = require('../message-respond/request-drink');
 const { sendChristmas } = require('../message-respond/send-christmas');
 const { sendHalloween } = require('../message-respond/send-halloween')
 const { twosSystem } = require('../message-respond/twos-system');
@@ -24,8 +24,8 @@ module.exports = {
 		}
 
 		// User asking for a drink
-		if (requestSoda(message.content.toLowerCase())) {
-			await giveSoda(message);
+		if (requestDrink(message.content.toLowerCase())) {
+			await giveDrink(message);
 			return;
 		}
 

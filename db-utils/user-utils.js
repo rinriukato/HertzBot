@@ -71,7 +71,77 @@ async function updateUserScore(userEntry, isPositive, isRinri) {
     return
 }
 
+// Expected: UserDoc from db, int for what entry to make changes to
+async function updateUserDrinks(userEntry, drinkIndex) {
+    switch(drinkIndex) {
+        // milkis
+        case 0: {
+            let drinkNum = userEntry.drinks_ordered.milkis;
+            drinkNum += 1;
+            userEntry.drinks_ordered.milkis = drinkNum;
+            break;
+        }
+        // bubble_tea
+        case 1: {
+            let drinkNum = userEntry.drinks_ordered.bubble_tea;
+            drinkNum += 1;
+            userEntry.drinks_ordered.bubble_tea = drinkNum;
+            break;
+        }
+        // tea
+        case 2: {
+            let drinkNum = userEntry.drinks_ordered.tea;
+            drinkNum += 1;
+            userEntry.drinks_ordered.tea = drinkNum;
+            break;
+        }
+        // milk
+        case 3: {
+            let drinkNum = userEntry.drinks_ordered.milk;
+            drinkNum += 1;
+            userEntry.drinks_ordered.milk = drinkNum;
+            break;
+        }
+        // coffee
+        case 4: {
+            let drinkNum = userEntry.drinks_ordered.coffee;
+            drinkNum += 1;
+            userEntry.drinks_ordered.cofee = drinkNum;
+            break;
+        }
+        // juice
+        case 5: {
+            let drinkNum = userEntry.drinks_ordered.juice;
+            drinkNum += 1;
+            userEntry.drinks_ordered.juice = drinkNum;
+            break;
+        }
+        // cola
+        case 6: {
+            let drinkNum = userEntry.drinks_ordered.cola;
+            drinkNum += 1;
+            userEntry.drinks_ordered.cola = drinkNum;
+            break;
+        }
+        // water
+        case 7: {
+            let drinkNum = userEntry.drinks_ordered.water;
+            drinkNum += 1;
+            userEntry.drinks_ordered.water = drinkNum;
+            break;
+        }
+        default: {
+            console.error(`An error has occured. Unexpected value when updating user drinks: ${drinkIndex}`);
+            return;
+        }
+    }
+
+    await userEntry.save();
+    console.log('Successfully updated user drinks!');
+}
+
 module.exports = {
     findUserCreate, 
     updateUserScore,
+    updateUserDrinks,
 }
