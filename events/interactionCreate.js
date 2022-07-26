@@ -15,17 +15,5 @@ module.exports = {
                 interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
             }
         }
-
-        // if (interaction.isButton()) {
-        //     if (interaction.customId === 'rock') {
-        //         interaction.reply({content: "You picked rock!"});
-        //     }
-        //     if (interaction.customId === 'paper') {
-        //         interaction.reply({content: "You picked rock!"});
-        //     }
-        //     if (interaction.customId === 'rock') {
-        //         interaction.reply({content: "You picked rock!"});
-        //     }
-        // }
 	},
 };

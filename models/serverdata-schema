@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const serverSchema = new mongoose.Schema({
-    "server_id": {
+    "guild_id": {
         type: Number,
         required: true
     },
-    "server_name": {
+    "guild_name": {
         type: String,
         required: true,
     },
