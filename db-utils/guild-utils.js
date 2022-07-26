@@ -8,7 +8,7 @@ async function findGuildCreate(guild) {
     const guildId = guild.id;
 
     const queryGuild = await Server.findOne({server_id: guildId}).exec();
-    if (queryServer != null) {
+    if (queryGuild != null) {
         console.log('Server found in database!');
         return queryGuild;
     } 

@@ -33,6 +33,45 @@ async function createNewUserEntry(userId, userName, guildId, guildName) {
     return newUserEntryl
 }
 
+// Expected: UserDoc from db, flag indicating what entry to be changed
+// Updates user scores based on what flags are triggered
+async function updateUserScore(userEntry, isPositive, isRinri) {
+    if (isRinri) {
+        if (isPositive) {
+            let curScore = userEntry.scores.rinri_positive_score;
+            curScore += 2;
+            userEntry.scores.rinri_positive_score = curScore;
+            await userEntry.save();
+            console.log(`Successfully updated ${userEntry.username}'s score!`); 
+            return;
+        }
+
+        let curScore = userEntry.scores.rinri_negative_score;
+        curScore += -2;
+        userEntry.scores.rinri_negative_score = curScore;
+        await userEntry.save();
+        console.log(`Successfully updated ${userEntry.username}'s score!`);
+        return
+    }
+
+    if (isPositive) {
+        let curScore = userEntry.scores.positive_score;
+        curScore += 2;
+        userEntry.scores.positive_score = curScore;
+        await userEntry.save();
+        console.log(`Successfully updated ${userEntry.username}'s score!`);
+        return;
+    }
+
+    let curScore = userEntry.scores.negative_score;
+    curScore += -2;
+    userEntry.scores.negative_score = curScore;
+    await userEntry.save();
+    console.log(`Successfully updated ${userEntry.username}'s score!`);
+    return
+}
+
 module.exports = {
-    findUserCreate,
+    findUserCreate, 
+    updateUserScore,
 }
