@@ -13,8 +13,8 @@ async function twosSystem (message) {
 
     // Get referenced person data
     const mentionedUser = await findUserCreate(message.mentions.repliedUser, message.guild);
-
-    if (author.userId === mentionedUser.userId) {
+    
+    if (author.user_id === mentionedUser.user_id) {
         await message.reply(`You can't rate yourself, silly :stuck_out_tongue: `);
         return;
     }

@@ -30,7 +30,7 @@ async function createNewUserEntry(userId, userName, guildId, guildName) {
 
     await newUserEntry.save();
     console.log(`Created new mentioned user ${userId}`);
-    return newUserEntryl
+    return newUserEntry;
 }
 
 // Expected: UserDoc from db, flag indicating what entry to be changed
