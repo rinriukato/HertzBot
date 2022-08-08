@@ -1,5 +1,5 @@
 const { findGuildCreate } = require('../db-utils/guild-utils');
-const { findUserCreate, updateUserScore } = require('../db-utils/user-utils');
+const { findUserCreate, updateUserScore, updateAuthorCooldown, isUserOffCooldown, getCooldownTime} = require('../db-utils/user-utils');
 
 async function twosSystem (message) {
     // Get guild data
@@ -16,12 +16,19 @@ async function twosSystem (message) {
         return;
     }
 
+    if (!isUserOffCooldown(author.cooldown)) {
+        await message.reply(`On cooldown! ${getCooldownTime(author.cooldown)} minute(s) untill this command is ready!`);
+        return;
+    }
+
     if (message.content === '+2') {
         await updateUserScore(mentionedUser, isPositive=true, isRinri=false);
+        await updateAuthorCooldown(author);
     }
 
     if (message.content === '-2') {
         await updateUserScore(mentionedUser, isPositive=false, isRinri=false);
+        await updateAuthorCooldown(author);
     }
     
 }
