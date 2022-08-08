@@ -1,10 +1,42 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { findGuildCreate } = require('../db-utils/guild-utils');
+const { MessageEmbed } = require('discord.js');
+const { emotes } = require('../assets');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('server-info')
         .setDescription('Displays server information'),
     async execute(interaction) {
-        await interaction.reply(`Server name: ${interaction.guild.name}\nTotal members: ${interaction.guild.memberCount}`);
+        const guild = await findGuildCreate(interaction.guild);
+        console.log(interaction.guild);
+
+        const guildName = guild.guild_name;
+
+        const serverEmbed = new MessageEmbed()
+            .setColor(0x007FFF)
+            .setTitle(`:floppy_disk: [${guildName}] Server Card`)
+            .addFields( 
+                { name: `---------------- Chain Attack Stats ----------------`, value: '\u200B'},
+                { name: ':shield: Total Chains Attacks',
+                  value:`${(guild.server_chain_stats.total_server_chains).toString()}`, inline: true },
+                { name: ':crossed_swords: Total Max Chains',
+                  value:`${(guild.server_chain_stats.total_server_max_chains).toString()}`, inline: true },
+                { name: '\u200B', value: '\u200B', inline:true },
+                { name: `---------------- Beverage History ----------------`, value: '\u200B'},
+                { name: `${emotes.MILKIS_EMOTE} Milkis`, value: `${(guild.server_drink_stats.milkis).toString()} `, inline: true},
+                { name: `:tea: Tea`, value: `${(guild.server_drink_stats.tea).toString()}`, inline: true},
+                { name: `:bubble_tea: Boba Tea`, value: `${(guild.server_drink_stats.bubble_tea).toString()}`, inline: true},
+
+                { name: `:milk: Milk`, value: `${(guild.server_drink_stats.milk).toString()}`, inline: true},
+                { name: `:coffee: Coffee`, value: `${(guild.server_drink_stats.coffee).toString()}`, inline: true},
+                { name: `:beverage_box: Juice`, value: `${(guild.server_drink_stats.juice).toString()}`, inline: true},
+
+                { name: `${emotes.COLA_EMOTE} Cola`, value: `${(guild.server_drink_stats.cola).toString()}`, inline: true},
+                { name: `${emotes.WATER_EMOTE} Water`, value: `${(guild.server_drink_stats.water).toString()}`, inline: true},
+                { name: '\u200B', value: '\u200B', inline:true },
+            )
+
+        await interaction.reply({ embeds: [serverEmbed] });
     },
 };

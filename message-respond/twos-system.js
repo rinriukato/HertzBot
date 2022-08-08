@@ -1,6 +1,3 @@
-const mongoose = require('mongoose');
-const User = require('../models/userdata-schema');
-const Server = require('../models/serverdata-schema');
 const { findGuildCreate } = require('../db-utils/guild-utils');
 const { findUserCreate, updateUserScore } = require('../db-utils/user-utils');
 

@@ -12,10 +12,7 @@ module.exports = {
         .setDescription('Displays user information'),
     async execute(interaction) {
 
-        //console.log(interaction);
-        const author = await findUserCreate(interaction.user, interaction.guild);
-        // console.log(author);
-        // console.log(`Info stuff: ${author.positive_score}`);
+        const author = await findUserCreate(interaction.user ,interaction.guild);
 
         const name = author.username;
         const avatarUrl = interaction.user.displayAvatarURL();
@@ -29,24 +26,20 @@ module.exports = {
         
         const max = Math.max(...drinksHistory);
         const index = drinksHistory.indexOf(max);
+        const totalScore = (scores[0] + scores[2]) * (scores[1] + scores[3]);
 
-
-        const exampleEmbed = new MessageEmbed()
+        const userEmbed = new MessageEmbed()
             .setColor(0x0099FF)
-            .setTitle(` Look at this dude ------------------------->`)
-            .setAuthor({ name: name, iconURL: avatarUrl})
+            .setTitle(`:page_with_curl: ${name}'s User Card`)
             .setThumbnail(avatarUrl)
             .addFields(
-                { name: ':star: Cumulative Score', value: (scores[0] + scores[2]).toString(), inline:true},
-                { name: ':star2: Rinri Rating', value: (scores[1] + scores[3]).toString(), inline:true},
+                { name: ':star: Cumulative Score', value: totalScore.toString(), inline:true},
                 { name: `${drinkEmotes[index]} Most Ordered Drink`, value: `Ordered ${drinksHistory[index]} ${drinks[index]}`, inline:true},
-                { name: '+2 | -2', value: `+${(scores[0]).toString()} | -${(scores[2]).toString()}`, inline: true },
-                { name: 'Rinri:tm: +2 | -2', value: `+${(scores[1]).toString()} | -${(scores[3]).toString()}`, inline: true },
-                //{ name: '\u200B', value: '\u200B' },
+                { name: '\u200B', value: '\u200B', inline:true },
+                { name: 'Total +2 received', value: `+${(scores[0]).toString()}`, inline: true },
+                { name: 'Total -2 received', value: `-${(scores[2]).toString()}`, inline: true },
             )
-            .setTimestamp()
-            .setFooter({ text: 'Idk what to put here'});
 
-        await interaction.reply({ embeds: [exampleEmbed] });
+        await interaction.reply({ embeds: [userEmbed] });
     },
 };

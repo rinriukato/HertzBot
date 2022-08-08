@@ -6,10 +6,12 @@ const Server = require('../models/serverdata-schema');
 async function findGuildCreate(guild) {
     const guildName = guild.name;
     const guildId = guild.id;
+    console.log(guildName);
 
-    const queryGuild = await Server.findOne({server_id: guildId}).exec();
+    const queryGuild = await Server.findOne({guild_id: guildId}).exec();
     if (queryGuild != null) {
         console.log('Server found in database!');
+        console.log(queryGuild);
         return queryGuild;
     } 
     
