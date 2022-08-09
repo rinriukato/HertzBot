@@ -140,29 +140,8 @@ async function updateUserDrinks(userEntry, drinkIndex) {
     console.log('Successfully updated user drinks!');
 }
 
-async function updateAuthorCooldown(authorEntry) {
-    authorEntry.cooldown = Date.now();
-    await authorEntry.save();
-}
-
-function isUserOffCooldown(lastUsed) {
-    const cooldownThreshold = 10;
-    let timeElapsed = Date.now() - lastUsed; // in miliseconds
-    timeElapsed = Math.floor(timeElapsed/ 60000); // convert to minutes
-
-    return timeElapsed >= cooldownThreshold ? true : false;
-}
-
-function getCooldownTime(lastUsed) {
-    const cooldownThreshold = 10;
-    return cooldownThreshold - Math.floor((Date.now() - lastUsed)/ 60000);
-}
-
 module.exports = {
     findUserCreate, 
     updateUserScore,
     updateUserDrinks,
-    updateAuthorCooldown,
-    isUserOffCooldown,
-    getCooldownTime,
 }

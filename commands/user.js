@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
 const { emotes } = require('../assets');
-const { findUserCreate, isUserOffCooldown, getCooldownTime } = require('../db-utils/user-utils');
+const { findUserCreate } = require('../db-utils/user-utils');
 
 const drinks = ["milkis", "teas", "bubble teas", "milks", "coffees", "juices", "colas", "waters"];
 const drinkEmotes = [emotes.MILKIS_EMOTE,":tea:",":bubble_tea:", ":milk:", ":coffee:", ":beverage_box:", emotes.COLA_EMOTE ,emotes.WATER_EMOTE];
@@ -28,8 +28,6 @@ module.exports = {
         const index = drinksHistory.indexOf(max);
         const totalScore = (scores[0] + scores[2]) * (scores[1] + scores[3]);
 
-        const cooldownStatus = isUserOffCooldown(author.cooldown) ? 'Ready to go!' : `Ready in ${getCooldownTime(author.cooldown).toString()} minute(s)`;
-
         const userEmbed = new MessageEmbed()
             .setColor(0x0099FF)
             .setTitle(`:page_with_curl: ${name}'s User Card`)
@@ -37,7 +35,7 @@ module.exports = {
             .addFields(
                 { name: ':star: Cumulative Score', value: totalScore.toString(), inline:true},
                 { name: `${drinkEmotes[index]} Most Ordered Drink`, value: `Ordered ${drinksHistory[index]} ${drinks[index]}`, inline:true},
-                { name: ':clock1: Cooldown Status', value: cooldownStatus, inline:true },
+                { name: '\u200B', value: '\u200B', inline:true },
                 { name: 'Total +2 received', value: `+${(scores[0]).toString()}`, inline: true },
                 { name: 'Total -2 received', value: `-${(scores[2]).toString()}`, inline: true },
             )
