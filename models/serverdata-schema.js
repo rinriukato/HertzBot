@@ -9,45 +9,22 @@ const serverSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    "chain_attack_info": {
-        "is_chain_active": {
-            type: Boolean,
-            default: false,
-        },
-        "current_chain_level": {
-            type: Number, 
-            default: 0,
-        },
-        "chain_target": {
-            type: Number,
-            default: null,
-        },
-        "most_recent_message_target": {
-            type: Number,
-            default: null,
-        },
-        "total_chain_attacks": {
-            type: Number,
-            default: 0,
-        },
-        "current_damage_dealt": {
-            type: Number,
-            default: 0,
-        },
-        "current_party_members": [],
+    "wave_battle_status": {
+        "is_battle_active": { type: Boolean, default: false },
+        "trg_user_id": { type: Number, default: null },
+        "trg_msg_id": { type: Number, default: null },
+        "combo_lvl": { type: Number,default: 0 },
+        "battle-timer": { type: Number, default: null },
     },
-    "server_chain_stats": {
-        "total_server_chains": {
-            type: Number,
-            default: 0,
-        },
-        "total_server_max_chains": {
-            type: Number,
-            default: 0,
-        }
+    "wave_battle_history": {
+        "total_player_wave_battles": {type: Number, default: 0},
+        "players_del": {type: Number, default: 0},
+        "virus_del": {type: Number, default: 0},
+        "plus_twos_given": {type: Number, default: 0},
+        "minus_twos_given": {type: Number, default: 0},
+        "cards_used": {type: Number, default: 0},
     },
     "server_drink_stats": {
-        "favorite_drink": {type: String, default: ''},
         "milkis": {type: Number, default: 0},
         "tea": {type: Number, default: 0},
         "bubble_tea": {type: Number, default: 0},

@@ -17,11 +17,7 @@ module.exports = {
             .setColor(0x007FFF)
             .setTitle(`:floppy_disk: [${guildName}] Server Card`)
             .addFields( 
-                { name: `---------------- Chain Attack Stats ----------------`, value: '\u200B'},
-                { name: ':shield: Total Chains Attacks',
-                  value:`${(guild.server_chain_stats.total_server_chains).toString()}`, inline: true },
-                { name: ':crossed_swords: Total Max Chains',
-                  value:`${(guild.server_chain_stats.total_server_max_chains).toString()}`, inline: true },
+                { name: `---------------- Wave Battle Stats ----------------`, value: '\u200B'},
                 { name: '\u200B', value: '\u200B', inline:true },
                 { name: `---------------- Beverage History ----------------`, value: '\u200B'},
                 { name: `${emotes.MILKIS_EMOTE} Milkis`, value: `${(guild.server_drink_stats.milkis).toString()} `, inline: true},

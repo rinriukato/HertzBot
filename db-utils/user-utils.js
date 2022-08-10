@@ -6,6 +6,7 @@ const User = require('../models/userdata-schema');
 async function findUserCreate(user, guild) {
     const userId = user.id;
     const userName = user.username;
+    const discriminator = user.discriminator;
     const guildId = guild.id;
     const guildName = guild.name;
 
@@ -16,17 +17,19 @@ async function findUserCreate(user, guild) {
         return queryUser;
     }
 
-    return await createNewUserEntry(userId, userName, guildId, guildName);
+    return await createNewUserEntry(userId, userName, discriminator, guildId, guildName);
 }
 
-async function createNewUserEntry(userId, userName, guildId, guildName) {
+async function createNewUserEntry(userId, userName, discriminator ,guildId, guildName) {
     const newUserEntry = new User({
         user_id: userId,
         username: userName,
+        discriminator: discriminator,
         guild_id: guildId,
         guild_name: guildName,
-        cooldown: Date.now(),
-    })
+    });
+
+    newUserEntry.battle_status.atk_cd = Date.now();
 
     await newUserEntry.save();
     console.log(`Created new mentioned user ${userId}`);
@@ -38,34 +41,34 @@ async function createNewUserEntry(userId, userName, guildId, guildName) {
 async function updateUserScore(userEntry, isPositive, isRinri) {
     if (isRinri) {
         if (isPositive) {
-            let curScore = userEntry.scores.rinri_positive_score;
+            let curScore = userEntry.scores.rinri_pos_score;
             curScore += 2;
-            userEntry.scores.rinri_positive_score = curScore;
+            userEntry.scores.rinri_pos_score = curScore;
             await userEntry.save();
             console.log(`Successfully updated ${userEntry.username}'s score!`); 
             return;
         }
 
-        let curScore = userEntry.scores.rinri_negative_score;
+        let curScore = userEntry.scores.rinri_neg_score;
         curScore += -2;
-        userEntry.scores.rinri_negative_score = curScore;
+        userEntry.scores.rinri_neg_score = curScore;
         await userEntry.save();
         console.log(`Successfully updated ${userEntry.username}'s score!`);
         return
     }
 
     if (isPositive) {
-        let curScore = userEntry.scores.positive_score;
+        let curScore = userEntry.scores.pos_score;
         curScore += 2;
-        userEntry.scores.positive_score = curScore;
+        userEntry.scores.pos_score = curScore;
         await userEntry.save();
         console.log(`Successfully updated ${userEntry.username}'s score!`);
         return;
     }
 
-    let curScore = userEntry.scores.negative_score;
+    let curScore = userEntry.scores.neg_score;
     curScore += -2;
-    userEntry.scores.negative_score = curScore;
+    userEntry.scores.neg_score = curScore;
     await userEntry.save();
     console.log(`Successfully updated ${userEntry.username}'s score!`);
     return
@@ -140,8 +143,29 @@ async function updateUserDrinks(userEntry, drinkIndex) {
     console.log('Successfully updated user drinks!');
 }
 
+async function updateAuthorCooldown(authorEntry) {
+    authorEntry.battle_status.atk_cd = Date.now();
+    await authorEntry.save();
+}
+
+function isUserOffCooldown(lastUsed) {
+    const cooldownThreshold = 10;
+    let timeElapsed = Date.now() - lastUsed; // in miliseconds
+    timeElapsed = Math.floor(timeElapsed/ 60000); // convert to minutes
+
+    return timeElapsed >= cooldownThreshold ? true : false;
+}
+
+function getCooldownTime(lastUsed) {
+    const cooldownThreshold = 10;
+    return cooldownThreshold - Math.floor((Date.now() - lastUsed)/ 60000);
+}
+
 module.exports = {
     findUserCreate, 
     updateUserScore,
     updateUserDrinks,
+    updateAuthorCooldown,
+    isUserOffCooldown,
+    getCooldownTime,
 }

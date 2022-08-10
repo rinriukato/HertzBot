@@ -12,7 +12,7 @@ Hertz (at its current state) mostly ping pongs replies with its commands.
 * If you say thanks in reply to someone else, Hertz may jump in and steal the credit
 * Hertz will send a neat happy birthday message if you say the following: ```Hertz send birthday to [NAME]```
 
-## +2 | -2 System
+## Wave Battle System
 
 More or less a reference to this [jerma video](https://www.youtube.com/watch?v=KSp3Q_jvGGs) and its community. But with its own twist inspired from the series: Xenoblade Chronicles.
 
@@ -20,42 +20,96 @@ In essence, +2|-2 is a score (and limited to only those two values) given in rep
 
 These scores are actively kept track by Hertz in a database. More explicitly, if a user makes a reply to another user with the context: "+2" or "-2". Then the author of that comment will recieve the score.
 
+To prevent the usage of inflating another user's score. There is an internal cooldown for each person to say "+2" or "-2" and actively affect another's score. In this current implementation, that cooldown is set to *1 hour*. This will ideally encourage the more sparse and careful usage of a +2|-2 while making the chain system more likely to be interacted with.
+
 Users can see their scores when inputting the command:
-```.userstats```
+/user-info
 
-To prevent the usage of inflating another user's score. There is an internal cooldown for each person to say "+2" or "-2" and actively affect another's score. In this current implementation, that cooldown is set to *1 day*. This will ideally encourage the more sparse and careful usage of a +2|-2 while making the chain system more likely to be interacted with.
+You can also see the server stats by using the command:
+/server-info
 
-### Chain System
-Inspired from the chain system in Xenoblade chronicles, where party members go in order and continuously attack an enemy, with each blow dealing a huge amount of damage as the chain continues.
+## System Overhaul
+*PURPOSE* - As of 8/9/22, I am remaking the current +2 |-2 System because its too complicated and hard to test. I want to make it closer to megaman battle network and starforce since that's the overall theme of the bot and not xenoblade chronicles
 
-Users will be encourage to save their +2|-2 for multiple users to "chain" another users with either +2 or -2.
-During a successful chain attack started by at least 3 users, the following occurs to all participants:
-* Each party member's cooldowns will be *reset*, therefore allowing them to attack again
-* With each chain level, a multiplier will be applied to every attack. Allowing for the party to deal high damage
+### GENERAL REQUIREMENTS - 
 
-Here is a table listing all the chain attack properties at each level
-| Chain Level  | Multiplier | Required Members | Chain Attack Expiry |
-| ------------- | ------------- | ------------- | ------------- |
-| 0  | 1.0x | 100 minutes|3|
-| 1  | 1.0x | 10 minutes| 3|
-| 2  | 1.5x | 8 minutes| 5 |
-| 3  | 2.0x | 5 minutes| 7 |
-| 4  | 2.5x | 3 minutes| 9 |
-| MAX | 3.0 | 1 minutes| 12|
+* Some attacking form - For this, i will still use +2 | -2 as the attacking form
+* Cooldown System - Users can still only attack every hour or so
+* Elemental Wheel - Players must either use their elements or special cards in order to continue a combo
+	- Fire -strong against -> Wood -strong against-> Thunder -> -strong against-> Aqua -strong against-> Fire...
+	- Players are randomly assigned an element upon creation [Maybe change element every week to mix it up]
 
-Chain Level 0 represents the default chain level with no active chains are on-going
-Chain Level MAX (or 5) represents the chain level, and signify that the chain will automatically end
+### HOW TO START A WAVE BATTLE - 
 
-Chain can be broken by the following conditions:
+* Two different users reply +2 or -2 to the same message
+* The latest person who replies afflicts a status onto the target user
+* A wave battle begins where only the effective elements can continue a combo [Like in battle network in order to chain cards]
 
-**IF THERE IS NO CHAIN ONGOING**
-* Users reply +2|-2 to a different message
+### HOW TO END A WAVE BATTLE - 
+* If the target message has not recieved any +2 or -2 within a given time limit (Maybe around 10 minutes)
+* If the attacker did not use the correct element to continue a combo
+* If the target runs out of HP for the day
 
-**IF THERE IS A CHAIN ONGOING**
-* Replying +2|-2 to a different user than the target user
-* Replying +2|-2 to a different message but the same target user
-* Failing to reply +2|-2 within the time range
-* Failing to reply in the same channel (Although you current can only reply to messages in the same channel. A bit of future proofing in case discord changes that rule)
+### HOW TO USE ITEMS - 
+* Items are obtained from the Hertz Shop
+* Players can buy elemental cards in order to attack with an element they currently do not have
+	- USING AN ITEM CARD BESIDES REFRESH WILL CAUSE COOLDOWN TO OCCUR
+
+### HOW TO GET CREDITS - 
+* Daily Credit command -> gives x amount of credits
+* NPC Wave battle -> Cooldown for using command, basicaly elemental rps.
+
+
+### General flow of the battle
+
+User A ==[-2]==> User Z
+ - No element check
+ - User A on Cooldown
+ - User Z is now target
+
+User B[Wood] ==[-2]==> User Z
+ - Elemental Check
+ - User B on Cooldown
+ - User Z is still target, 2 attacks occur against User Z
+	- Wave Battle Initiate
+ 	- User Z afflicted with Wood
+
+HERTZ NOTIFICATION:
+ | WAVE BATTLE START |
+ | TARGET: USER Z    |
+ | STATUS: WOOD      |
+ | COMBO: 2	     |
+ | MULTIPLIER: 1.5   |
+
+User C[Fire] ==[-2]==> User Z[WOOD]
+ - Elemental Check
+ - User C on Cooldown
+ - User Z is still target, 3 attacks occur against User Z
+ - Elemental weakness applied, Combo continues
+ - Multiplier Level up 1.5x -> 2.0x incoming damage
+
+HERTZ NOTIFICATION: [APPEARS AGAIN IF MULTIPLIER LEVELS UP]
+ | WAVE BATTLE START |
+ | TARGET: USER Z    |
+ | STATUS: WOOD      |
+ | COMBO: 2	         |
+ | MULTIPLIER: 2.0   |
+
+USER A USES A REFRESH CARD
+ - User A cooldown is off, therefore can attack again
+
+USER A[FIRE] ==[-2]==> USER Z [FIRE]
+ - Elemental Check [FAIL]
+ - User A on cooldown
+ - User Z is still target, 4 attacks occur against User Z
+ - Since element was not Aqua, the combo ends and therefore the wave battle
+
+HERTZ NOTIFICATION: [APPEARS AGAIN IF MULTIPLIER LEVELS UP]
+ | WAVE BATTLE END     |
+ | TARGET: USER Z      |
+ | COMBO: 4	       |
+ | INFLICTED DAMAGE:10 |
+
 
 ## Closing Remarks
 The points are ultimately meaningless as they currently have no real value or usage within the box context. Just have fun and mess around with it.
@@ -69,7 +123,7 @@ The points are ultimately meaningless as they currently have no real value or us
 - [ ] Have a "quote" storage featuring database adding, and message searching
 - [X] Basic game interaction: RPS and the like for added points
 - [X] Soda Machine / Shop Options
-- [ ] Create a cooldown mechanism when requesting drinks, to prevent spam and overrunning database writing
-- [ ] Funny +2 / -2 Rating system
+- [X] Create a cooldown mechanism when requesting drinks, to prevent spam and overrunning database writing
+- [X] Funny +2 / -2 Rating system
 - [ ] Admin controls such as enabling the system on the server
 - [ ] User opting in or out to the twos system
