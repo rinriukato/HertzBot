@@ -21,10 +21,10 @@ These scores are actively kept track by Hertz in a database. More explicitly, if
 To prevent the usage of inflating another user's score. There is an internal cooldown for each person to say "+2" or "-2" and actively affect another's score. In this current implementation, that cooldown is set to *1 hour*. This will ideally encourage the more sparse and careful usage of a +2|-2 while making the chain system more likely to be interacted with.
 
 Users can see their scores when inputting the command:
-/user-info
+```/user-info```
 
 You can also see the server stats by using the command:
-/server-info
+```/server-info```
 
 ## System Overhaul
 *PURPOSE* - As of 8/9/22, I am remaking the current +2 |-2 System because its too complicated and hard to test. I want to make it closer to megaman battle network and starforce since that's the overall theme of the bot and not xenoblade chronicles

@@ -41,6 +41,7 @@ module.exports = {
                 { name: `${drinkEmotes[index]} Most Ordered Drink`, value: `Ordered ${drinksHistory[index]} ${drinks[index]}`, inline:true},
                 { name: '\u200B', value: '\u200B', inline:true },
                 { name: ':clock1: Cooldown Status', value: cooldownStatus, inline:true },
+                { name: 'Element', value: author.battle_status.elem, inline:true },
                 { name: 'Total +2 received', value: `+${(scores[0]).toString()}`, inline: true },
                 { name: 'Total -2 received', value: `-${(scores[2]).toString()}`, inline: true },
             )

@@ -20,6 +20,7 @@ async function findUserCreate(user, guild) {
     return await createNewUserEntry(userId, userName, discriminator, guildId, guildName);
 }
 
+// Creates a new entry for the database
 async function createNewUserEntry(userId, userName, discriminator ,guildId, guildName) {
     const newUserEntry = new User({
         user_id: userId,
@@ -27,9 +28,11 @@ async function createNewUserEntry(userId, userName, discriminator ,guildId, guil
         discriminator: discriminator,
         guild_id: guildId,
         guild_name: guildName,
+        battle_status: {
+            atk_cd: Date.now(),
+            elem: initUserElem(userId, parseInt(discriminator)),
+        }
     });
-
-    newUserEntry.battle_status.atk_cd = Date.now();
 
     await newUserEntry.save();
     console.log(`Created new mentioned user ${userId}`);
@@ -143,11 +146,13 @@ async function updateUserDrinks(userEntry, drinkIndex) {
     console.log('Successfully updated user drinks!');
 }
 
+// Updates user cooldown to now
 async function updateAuthorCooldown(authorEntry) {
     authorEntry.battle_status.atk_cd = Date.now();
     await authorEntry.save();
 }
 
+// Check if the user is off cooldown designated by time-elapsed
 function isUserOffCooldown(lastUsed) {
     const cooldownThreshold = 10;
     let timeElapsed = Date.now() - lastUsed; // in miliseconds
@@ -156,9 +161,99 @@ function isUserOffCooldown(lastUsed) {
     return timeElapsed >= cooldownThreshold ? true : false;
 }
 
+// Return string representing how long til cooldown is over
 function getCooldownTime(lastUsed) {
     const cooldownThreshold = 10;
     return cooldownThreshold - Math.floor((Date.now() - lastUsed)/ 60000);
+}
+
+// Initalize the user's starting element based on their userID and discriminator
+function initUserElem (userId, discrim) {
+    const elems = ["fire", "wood", "elec", "aqua"];
+    console.log(userId/discrim);
+    console.log(Math.floor((userId/discrim)));
+    const seed = Math.floor((userId/discrim)) % 4;
+    console.log(seed);
+    console.log(elems[seed]);
+    return elems[seed];
+}
+
+// Increment player battles initatied by 1
+async function updatePlayerBattleInit(userEntry) {
+    let curScore = userEntry.battle_history.player_battle_init;
+    curScore++;
+    userEntry.battle_history.player_battle_init = curScore;
+    await userEntry.save();
+}
+
+// Increment the number of times this player has been deleted by 1
+async function updateSelfDel(userEntry) {
+    let curScore = userEntry.battle_history.self_del;
+    curScore++;
+    userEntry.battle_history.self_del = curScore;
+    await userEntry.save();
+}
+
+// Update the number of times this player has deleted another player by 1
+async function updatePlayerDel(userEntry) {
+    let curScore = userEntry.battle_history.players_del;
+    curScore++;
+    userEntry.battle_history.players_del = curScore;
+    await userEntry.save();
+}
+
+// Update the number of times this player has deleted a virus by 1
+async function updateVirusDel(userEntry) {
+    let curScore = userEntry.battle_history.virus_del;
+    curScore++;
+    userEntry.battle_history.virus_del = curScore;
+    await userEntry.save();
+}
+
+// Update the number of times this player has used a card by 1
+async function updateCardsUsed(userEntry) {
+    let curScore = userEntry.battle_history.cards_used;
+    curScore++;
+    userEntry.battle_history.cards_used = curScore;
+    await userEntry.save();
+}
+
+// Update the player's money by amount. Use "isNegative" to deduct that amount from the player's account
+async function updatePlayerMoney(userEntry, amount, isNegative) {
+    if (isNegative) {
+        amount * -1;
+    }
+    
+    let balance = userEntry.battle_status.money;
+    balance += amount;
+
+    if (balance < 0) {
+        balance = 0;
+    }
+
+    userEntry.battle_status.money = balance;
+    await userEntry.save();
+}
+
+// Sets the player's afflicted elem to elemstr. Pass "null" to clear
+async function setAfflictedElem(userEntry, elemStr) {
+    userEntry.battle_status.afflictedElm = elemStr;
+    await userEntry.save();
+}
+
+// Set the player's equip to equipment
+async function setEquipment(userEntry, equipment) {
+    userEntry.battle_status.equip = equipment;
+    await userEntry.save();
+}
+
+async function setActive(userEntry, isActive) {
+    userEntry.battle_status.is_active = isActive;
+    await userEntry.save();
+}
+
+function isUserActive(userEntry) {
+    return userEntry.battle_status.is_active;
 }
 
 module.exports = {
@@ -168,4 +263,9 @@ module.exports = {
     updateAuthorCooldown,
     isUserOffCooldown,
     getCooldownTime,
+    updatePlayerBattleInit,
+    updateSelfDel,
+    updatePlayerDel,
+    updateVirusDel,
+    updateCardsUsed
 }
