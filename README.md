@@ -1,20 +1,18 @@
-# HertzBot (PY) -> Mr. Denpa (JS)
-
-## Preface
+# Preface
 This is HertzBot, a custom discord bot made for my private servers. Does mostly funny things.
 
 **PLEASE ASK ME FIRST BEFORE USING**
 
-## Features
+# Features
 Hertz (at its current state) mostly ping pongs replies with its commands.
 
 * You can ask Hertz for a Milkis, and Hertz shall provide
 * If you say thanks in reply to someone else, Hertz may jump in and steal the credit
 * Hertz will send a neat happy birthday message if you say the following: ```Hertz send birthday to [NAME]```
 
-## Wave Battle System
+# Wave Battle System
 
-More or less a reference to this [jerma video](https://www.youtube.com/watch?v=KSp3Q_jvGGs) and its community. But with its own twist inspired from the series: Xenoblade Chronicles.
+More or less a reference to this [jerma video](https://www.youtube.com/watch?v=KSp3Q_jvGGs) and its community. But with its own twist inspired from the series: Megaman Battle Network/Star Force
 
 In essence, +2|-2 is a score (and limited to only those two values) given in reponse to how funny (or cool) a person's post was. Say if a person said a funny joke or posted something neat. You, the user, would reply "+2". Likewise if the person said something unfunny. You would reply "-2".
 
