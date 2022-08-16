@@ -146,8 +146,15 @@ async function updateServerCardsUsed(guildEntry) {
     await guildEntry.save();
 }
 
+function isBattleActive(guildEntry) {
+    return guildEntry.wave_battle_status.is_battle_active;
+}
+
 // Initate a wave battle
 async function initWaveBattle(guildEntry, trg_user, trg_msg) {
+    console.log('Target id:', trg_user);
+    console.log('Target id:', trg_msg);
+
     guildEntry.wave_battle_status.is_battle_active = true;
     guildEntry.wave_battle_status.trg_user_id = trg_user;
     guildEntry.wave_battle_status.trg_msg_id = trg_msg;
@@ -160,6 +167,10 @@ async function endWaveBattle(guildEntry) {
     guildEntry.wave_battle_status.trg_user_id = null;
     guildEntry.wave_battle_status.trg_msg_id = null;
     await guildEntry.save();
+}
+
+function getComboLevel(guildEntry) {
+    return guildEntry.wave_battle_status.combo_lvl;
 }
 
 // Increment combo level, if reset is true; set to 0
@@ -195,6 +206,19 @@ function getBattleTimeRemaining(startTime) {
     return timeBase - Math.floor((Date.now() - startTime)/ 60000);
 }
 
+async function setBattleTarget(guildEntry, targetId, msgId) {
+    guildEntry.wave_battle_status.trg_user_id = targetId;
+    guildEntry.wave_battle_status.trg_msg_id = msgId;
+    await guildEntry.save();
+}
+
+function isCorrectTarget(guildEntry, curTargetId, curMsgId) {
+    const isCorrectUser = guildEntry.wave_battle_status.trg_user_id == curTargetId;
+    const isCorrectMsg = guildEntry.wave_battle_status.trg_msg_id == curMsgId;
+    
+    return isCorrectUser && isCorrectMsg ? true : false;
+}
+
 module.exports = {
     findGuildCreate,
     updateGuildDrinks,
@@ -203,4 +227,14 @@ module.exports = {
     updateServerPlayerDel,
     updateServerVirusDel,
     updateServerCardsUsed,
+    initWaveBattle,
+    endWaveBattle,
+    setComboLevel,
+    startBattleTimer,
+    isBattleExpire,
+    getBattleTimeRemaining,
+    getComboLevel,
+    isBattleActive,
+    setBattleTarget,
+    isCorrectTarget,
 }

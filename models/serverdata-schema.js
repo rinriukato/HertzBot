@@ -14,7 +14,7 @@ const serverSchema = new mongoose.Schema({
         "trg_user_id": { type: Number, default: null },
         "trg_msg_id": { type: Number, default: null },
         "combo_lvl": { type: Number,default: 0 },
-        "battle-timer": { type: Number, default: null },
+        "battle_timer": { type: Number, default: null },
     },
     "wave_battle_history": {
         "total_player_wave_battles": {type: Number, default: 0},

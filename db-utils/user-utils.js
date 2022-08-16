@@ -41,7 +41,7 @@ async function createNewUserEntry(userId, userName, discriminator ,guildId, guil
 
 // Expected: UserDoc from db, flag indicating what entry to be changed
 // Updates user scores based on what flags are triggered
-async function updateUserScore(userEntry, isPositive, isRinri) {
+async function updateUserScore(userEntry, isPositive, isRinri, multi) {
     if (isRinri) {
         if (isPositive) {
             let curScore = userEntry.scores.rinri_pos_score;
@@ -62,7 +62,7 @@ async function updateUserScore(userEntry, isPositive, isRinri) {
 
     if (isPositive) {
         let curScore = userEntry.scores.pos_score;
-        curScore += 2;
+        curScore += (2 * multi);
         userEntry.scores.pos_score = curScore;
         await userEntry.save();
         console.log(`Successfully updated ${userEntry.username}'s score!`);
@@ -70,7 +70,8 @@ async function updateUserScore(userEntry, isPositive, isRinri) {
     }
 
     let curScore = userEntry.scores.neg_score;
-    curScore += -2;
+    console.log(multi);
+    curScore += (-2 * multi);
     userEntry.scores.neg_score = curScore;
     await userEntry.save();
     console.log(`Successfully updated ${userEntry.username}'s score!`);
@@ -158,7 +159,8 @@ function isUserOffCooldown(lastUsed) {
     let timeElapsed = Date.now() - lastUsed; // in miliseconds
     timeElapsed = Math.floor(timeElapsed/ 60000); // convert to minutes
 
-    return timeElapsed >= cooldownThreshold ? true : false;
+    //return timeElapsed >= cooldownThreshold ? true : false;
+    return true;
 }
 
 // Return string representing how long til cooldown is over
@@ -170,11 +172,7 @@ function getCooldownTime(lastUsed) {
 // Initalize the user's starting element based on their userID and discriminator
 function initUserElem (userId, discrim) {
     const elems = ["fire", "wood", "elec", "aqua"];
-    console.log(userId/discrim);
-    console.log(Math.floor((userId/discrim)));
     const seed = Math.floor((userId/discrim)) % 4;
-    console.log(seed);
-    console.log(elems[seed]);
     return elems[seed];
 }
 
@@ -256,6 +254,35 @@ function isUserActive(userEntry) {
     return userEntry.battle_status.is_active;
 }
 
+function getPlayerElem(userEntry) {
+    return userEntry.battle_status.elem;
+}
+
+function getPlayerAffElem(userEntry) {
+    return userEntry.battle_status.afflicted_elem;
+}
+
+function getPlayerHealth(userEntry) {
+    return userEntry.battle_status.hp;
+}
+
+async function setPlayerHealth(userEntry, damage) {
+
+    let userHealth = getPlayerHealth(userEntry);
+    console.log(`Dealt ${damage} to ${userEntry.username}`);
+
+    if (userHealth - damage < 0) {
+        userHealth = 0;
+    }
+    else {
+        userHealth - damage;
+    }
+    
+    console.log(`${userEntry.username}'s health has dropped to: ${userHealth}`);
+    userEntry.battle_status.hp = userHealth;
+    await userEntry.save();
+}
+
 module.exports = {
     findUserCreate, 
     updateUserScore,
@@ -267,5 +294,14 @@ module.exports = {
     updateSelfDel,
     updatePlayerDel,
     updateVirusDel,
-    updateCardsUsed
+    updateCardsUsed,
+    updatePlayerMoney,
+    setAfflictedElem,
+    setEquipment,
+    setActive,
+    isUserActive,
+    getPlayerElem,
+    getPlayerAffElem,
+    getPlayerHealth,
+    setPlayerHealth,
 }
