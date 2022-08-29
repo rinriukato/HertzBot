@@ -21,7 +21,7 @@ async function findUserCreate(user, guild) {
 }
 
 // Creates a new entry for the database
-async function createNewUserEntry(userId, userName, discriminator ,guildId, guildName) {
+async function createNewUserEntry(userId, userName, discriminator, guildId, guildName) {
     const newUserEntry = new User({
         user_id: userId,
         username: userName,
@@ -31,6 +31,7 @@ async function createNewUserEntry(userId, userName, discriminator ,guildId, guil
         battle_status: {
             atk_cd: Date.now(),
             elem: initUserElem(userId, parseInt(discriminator)),
+            money_cd: Date.now(),
         }
     });
 
@@ -233,6 +234,27 @@ async function updatePlayerMoney(userEntry, amount, isNegative) {
     await userEntry.save();
 }
 
+// Updates user money cooldown to now
+async function updateMoneyCooldown(authorEntry) {
+    authorEntry.battle_status.money_cd = Date.now();
+    await authorEntry.save();
+}
+
+// Check if the user is off cooldown designated by time-elapsed
+function isMoneyOffCooldown(lastUsed) {
+    const cooldownThreshold = 1440;
+    let timeElapsed = Date.now() - lastUsed; // in miliseconds
+    timeElapsed = Math.floor(timeElapsed/ 60000); // convert to minutes
+
+    return timeElapsed >= cooldownThreshold ? true : false;
+}
+
+// Return string representing how long til cooldown is over
+function getMoneyCooldownTime(lastUsed) {
+    const cooldownThreshold = 24;
+    return cooldownThreshold - Math.floor((Date.now() - lastUsed)/ 3.6e+6);
+}
+
 // Sets the player's afflicted elem to elemstr. Pass "null" to clear
 async function setAfflictedElem(userEntry, elemStr) {
     userEntry.battle_status.afflictedElm = elemStr;
@@ -304,4 +326,7 @@ module.exports = {
     getPlayerAffElem,
     getPlayerHealth,
     setPlayerHealth,
+    updateMoneyCooldown,
+    getMoneyCooldownTime,
+    isMoneyOffCooldown,
 }

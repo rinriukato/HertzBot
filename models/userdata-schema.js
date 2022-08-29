@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
         "is_active": {type: Boolean, default: true},            // If true, player cannot attack
         "atk_cd": { type: Number},                              // Timestamp til player can attack again (default 1-hour)
         "hp_cd": { type: Number},                               // Timestamp til player is revive and HP set to 100 (default 24-hours)
+        "money_cd": {type: Number},                             // Timestamp til player can reuse the money command (default 24-hours)
     },
     "battle_history": {
         "player_battle_init": {type: Number, default: 0},
