@@ -1,7 +1,7 @@
 # Preface
 This is HertzBot, a custom discord bot made for my private servers. Does mostly funny things.
 
-**PLEASE ASK ME FIRST BEFORE USING**
+** I would appreciate it if you inform me before using. Thank you! **
 
 # Features
 Hertz (at its current state) mostly ping pongs replies with its commands.
