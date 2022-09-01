@@ -68,7 +68,7 @@ const userSchema = new mongoose.Schema({
             "gun_dmg": {type: Number, default: 0},
             "barrier": {type: Number, default: 0},
         },
-        "swap-cards": {
+        "swap_cards": {
             "fire_swap": {type: Number, default: 0},
             "elec_swap": {type: Number, default: 0},
             "aqua_swap": {type: Number, default: 0},

@@ -220,11 +220,13 @@ async function updateCardsUsed(userEntry) {
 // Update the player's money by amount. Use "isNegative" to deduct that amount from the player's account
 async function updatePlayerMoney(userEntry, amount, isNegative) {
     if (isNegative) {
-        amount * -1;
+        amount *= -1;
     }
-    
+
     let balance = userEntry.battle_status.money;
     balance += amount;
+
+    console.log(`${balance} + ${amount} = ${balance + amount}`);
 
     if (balance < 0) {
         balance = 0;
@@ -232,6 +234,10 @@ async function updatePlayerMoney(userEntry, amount, isNegative) {
 
     userEntry.battle_status.money = balance;
     await userEntry.save();
+}
+
+function getPlayerMoney(userEntry) {
+    return userEntry.battle_status.money;
 }
 
 // Updates user money cooldown to now
@@ -305,6 +311,80 @@ async function setPlayerHealth(userEntry, damage) {
     await userEntry.save();
 }
 
+async function updatePlayerInventory(userEntry, itemName, amount, itemUsed) {
+    if (itemUsed) {
+        amount *= -1;
+    }
+
+    if (itemName === 'fire_dmg') {
+        let cards = userEntry.battle_cards.atk_cards.fire_dmg;
+        cards += amount;
+        userEntry.battle_cards.atk_cards.fire_dmg = cards;
+    } else if (itemName === 'elec_dmg') {
+        let cards = userEntry.battle_cards.atk_cards.elec_dmg;
+        cards += amount;
+        userEntry.battle_cards.atk_cards.elec_dmg = cards;
+    } else if (itemName === 'aqua_dmg') {
+        let cards = userEntry.battle_cards.atk_cards.aqua_dmg;
+        cards += amount;
+        userEntry.battle_cards.atk_cards.aqua_dmg = cards;
+    } else if (itemName === 'wood_dmg') {
+        let cards = userEntry.battle_cards.atk_cards.wood_dmg;
+        cards += amount;
+        userEntry.battle_cards.atk_cards.wood_dmg = cards;
+    } else if (itemName === 'swd_dmg') {
+        let cards = userEntry.battle_cards.equip_cards.swd_dmg;
+        cards += amount;
+        userEntry.battle_cards.equip_cards.swd_dmg = cards;
+    } else if (itemName === 'gun_dmg') {
+        let cards = userEntry.battle_cards.equip_cards.gun_dmg;
+        cards += amount;
+        userEntry.battle_cards.equip_cards.gun_dmg = cards;
+    } else if (itemName === 'barrier') {
+        let cards = userEntry.battle_cards.equip_cards.barrier;
+        cards += amount;
+        userEntry.battle_cards.equip_cards.barrier = cards;
+    } else if (itemName === 'fire_swap') {
+        let cards = userEntry.battle_cards.swap_cards.fire_swap;
+        cards += amount;
+        userEntry.battle_cards.swap_cards.fire_swap = cards;
+    } else if (itemName === 'elec_swap') {
+        let cards = userEntry.battle_cards.swap_cards.elec_swap;
+        cards += amount;
+        userEntry.battle_cards.swap_cards.elec_swap = cards;
+    } else if (itemName === 'aqua_swap') {
+        let cards = userEntry.battle_cards.swap_cards.aqua_swap;
+        cards += amount;
+        userEntry.battle_cards.swap_cards.aqua_swap = cards;
+    } else if (itemName === 'wood_swap') {
+        let cards = userEntry.battle_cards.swap_cards.wood_swap;
+        cards += amount;
+        userEntry.battle_cards.swap_cards.wood_swap = cards;
+    } else if (itemName === 'sml_hp') {
+        let cards = userEntry.battle_cards.support_cards.sml_hp;
+        cards += amount;
+        userEntry.battle_cards.support_cards.sml_hp = cards;
+    } else if (itemName === 'mid_hp') {
+        let cards = userEntry.battle_cards.support_cards.mid_hp;
+        cards += amount;
+        userEntry.battle_cards.support_cards.mid_hp = cards;
+    } else if (itemName === 'lrg_hp') {
+        let cards = userEntry.battle_cards.support_cards.lrg_hp;
+        cards += amount;
+        userEntry.battle_cards.support_cards.lrg_hp = cards;
+    } else if (itemName === 'refresh') {
+        let cards = userEntry.battle_cards.support_cards.refresh;
+        cards += amount;
+        userEntry.battle_cards.support_cards.refresh = cards;
+    } else if (itemName === 'rpd_revive') {
+        let cards = userEntry.battle_cards.support_cards.rpd_revive;
+        cards += amount;
+        userEntry.battle_cards.support_cards.rpd_revive = cards;
+    } 
+
+    await userEntry.save();
+}
+
 module.exports = {
     findUserCreate, 
     updateUserScore,
@@ -329,4 +409,6 @@ module.exports = {
     updateMoneyCooldown,
     getMoneyCooldownTime,
     isMoneyOffCooldown,
+    getPlayerMoney,
+    updatePlayerInventory,
 }
