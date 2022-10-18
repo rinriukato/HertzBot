@@ -42,7 +42,7 @@ async function createNewUserEntry(userId, userName, discriminator, guildId, guil
 
 // Expected: UserDoc from db, flag indicating what entry to be changed
 // Updates user scores based on what flags are triggered
-async function updateUserScore(userEntry, isPositive, isRinri, multi) {
+async function updateUserScore(userEntry, isPositive, isRinri) {
     if (isRinri) {
         if (isPositive) {
             let curScore = userEntry.scores.rinri_pos_score;
@@ -63,7 +63,7 @@ async function updateUserScore(userEntry, isPositive, isRinri, multi) {
 
     if (isPositive) {
         let curScore = userEntry.scores.pos_score;
-        curScore += (2 * multi);
+        curScore += 2;
         userEntry.scores.pos_score = curScore;
         await userEntry.save();
         console.log(`Successfully updated ${userEntry.username}'s score!`);
@@ -71,8 +71,7 @@ async function updateUserScore(userEntry, isPositive, isRinri, multi) {
     }
 
     let curScore = userEntry.scores.neg_score;
-    console.log(multi);
-    curScore += (-2 * multi);
+    curScore += -2;
     userEntry.scores.neg_score = curScore;
     await userEntry.save();
     console.log(`Successfully updated ${userEntry.username}'s score!`);
@@ -160,8 +159,7 @@ function isUserOffCooldown(lastUsed) {
     let timeElapsed = Date.now() - lastUsed; // in miliseconds
     timeElapsed = Math.floor(timeElapsed/ 60000); // convert to minutes
 
-    //return timeElapsed >= cooldownThreshold ? true : false;
-    return true;
+    return timeElapsed >= cooldownThreshold ? true : false;
 }
 
 // Return string representing how long til cooldown is over
