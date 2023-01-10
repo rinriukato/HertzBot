@@ -18,7 +18,7 @@ async function findGuildCreate(guild) {
 
 }
 
-// Creatse a new guild entry to the database
+// Creates a new guild entry to the database
 // Defaults according to schema
 async function createNewGuildEntry(guildId, guildName) {
     const newGuildEntry = new Server({
@@ -150,14 +150,8 @@ function isBattleActive(guildEntry) {
     return guildEntry.wave_battle_status.is_battle_active;
 }
 
-// Initate a wave battle
-async function initWaveBattle(guildEntry, trg_user, trg_msg) {
-    console.log('Target id:', trg_user);
-    console.log('Target id:', trg_msg);
-
-    guildEntry.wave_battle_status.is_battle_active = true;
-    guildEntry.wave_battle_status.trg_user_id = trg_user;
-    guildEntry.wave_battle_status.trg_msg_id = trg_msg;
+async function startWaveBattle(guildEntry) {
+    guildEntry.wave_battle_status.isBattleActive = true;
     await guildEntry.save();
 }
 
@@ -165,6 +159,7 @@ async function initWaveBattle(guildEntry, trg_user, trg_msg) {
 async function endWaveBattle(guildEntry) {
     guildEntry.wave_battle_status.is_battle_active = false;
     guildEntry.wave_battle_status.trg_user_id = null;
+    guildEntry.wave_battle_status.trg_user_name = null;
     guildEntry.wave_battle_status.trg_msg_id = null;
     await guildEntry.save();
 }
@@ -206,8 +201,9 @@ function getBattleTimeRemaining(startTime) {
     return timeBase - Math.floor((Date.now() - startTime)/ 60000);
 }
 
-async function setBattleTarget(guildEntry, targetId, msgId) {
-    guildEntry.wave_battle_status.trg_user_id = targetId;
+async function setBattleTarget(guildEntry, target, msgId) {
+    guildEntry.wave_battle_status.trg_user_id = target.user_id;
+    guildEntry.wave_battle_status.trg_user_name = target.username;
     guildEntry.wave_battle_status.trg_msg_id = msgId;
     await guildEntry.save();
 }
@@ -219,6 +215,26 @@ function isCorrectTarget(guildEntry, curTargetId, curMsgId) {
     return isCorrectUser && isCorrectMsg ? true : false;
 }
 
+async function setTotalDmg(guildEntry, dmg, reset) {
+    if (!reset) {
+        let cur_dmg = guildEntry.wave_battle_status.total_dmg;
+        cur_dmg += dmg;
+        guildEntry.wave_battle_status.total_dmg = cur_dmg; 
+    }  else {
+        guildEntry.wave_battle_status.total_dmg = 0; 
+    }
+
+    await guildEntry.save();
+}
+
+function getTotalDmg(guildEntry) {
+    return guildEntry.wave_battle_status.total_dmg;
+}
+
+function getTargetName(guildEntry) {
+    return guildEntry.wave_battle_status.trg_user_name;
+}
+
 module.exports = {
     findGuildCreate,
     updateGuildDrinks,
@@ -227,7 +243,6 @@ module.exports = {
     updateServerPlayerDel,
     updateServerVirusDel,
     updateServerCardsUsed,
-    initWaveBattle,
     endWaveBattle,
     setComboLevel,
     startBattleTimer,
@@ -237,4 +252,8 @@ module.exports = {
     isBattleActive,
     setBattleTarget,
     isCorrectTarget,
+    startWaveBattle,
+    setTotalDmg,
+    getTotalDmg,
+    getTargetName,
 }

@@ -12,9 +12,11 @@ const serverSchema = new mongoose.Schema({
     "wave_battle_status": {
         "is_battle_active": { type: Boolean, default: false },
         "trg_user_id": { type: Number, default: null },
+        "trg_user_name": {type: String, default: null},
         "trg_msg_id": { type: Number, default: null },
         "combo_lvl": { type: Number,default: 0 },
         "battle_timer": { type: Number, default: null },
+        "total_dmg": {type: Number, default: 0},
     },
     "wave_battle_history": {
         "total_player_wave_battles": {type: Number, default: 0},

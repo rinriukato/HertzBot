@@ -48,7 +48,7 @@ module.exports = {
         const max = Math.max(...drinksHistory);
         const money = author.battle_status.money;
         const index = drinksHistory.indexOf(max);
-        const totalScore = (scores[0] + scores[2]) * (scores[1] + scores[3]);
+        const totalScore = (scores[0] + scores[2]);
         const cooldownStatus = isUserOffCooldown(author.battle_status.atk_cd) ? 'Ready to go!' : `Ready in ${getCooldownTime(author.battle_status.atk_cd).toString()} minute(s)`;
 
         const userEmbed = new MessageEmbed()
@@ -56,7 +56,7 @@ module.exports = {
             .setTitle(`:page_with_curl: ${name}'s User Card`)
             //.setThumbnail(avatarUrl)
             .addFields(
-                { name: ':star: Cumulative Score', value: totalScore.toString(), inline:true},
+                { name: ':star: Rating:', value: totalScore.toString(), inline:true},
                 { name: `${drinkEmotes[index]} Most Ordered Drink`, value: `Ordered ${drinksHistory[index]} ${drinks[index]}`, inline:true},
                 { name: `Money`, value: `${money}`, inline:true},
                 { name: '\u200B', value: '\u200B', inline:true },

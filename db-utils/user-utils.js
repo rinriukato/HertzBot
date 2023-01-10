@@ -42,11 +42,11 @@ async function createNewUserEntry(userId, userName, discriminator, guildId, guil
 
 // Expected: UserDoc from db, flag indicating what entry to be changed
 // Updates user scores based on what flags are triggered
-async function updateUserScore(userEntry, isPositive, isRinri) {
+async function updateUserScore(userEntry, isPositive, bonusMulti, isRinri) {
     if (isRinri) {
         if (isPositive) {
             let curScore = userEntry.scores.rinri_pos_score;
-            curScore += 2;
+            curScore += (2 * bonusMulti);
             userEntry.scores.rinri_pos_score = curScore;
             await userEntry.save();
             console.log(`Successfully updated ${userEntry.username}'s score!`); 
@@ -54,7 +54,7 @@ async function updateUserScore(userEntry, isPositive, isRinri) {
         }
 
         let curScore = userEntry.scores.rinri_neg_score;
-        curScore += -2;
+        curScore += (-2 * bonusMulti);
         userEntry.scores.rinri_neg_score = curScore;
         await userEntry.save();
         console.log(`Successfully updated ${userEntry.username}'s score!`);
@@ -63,7 +63,7 @@ async function updateUserScore(userEntry, isPositive, isRinri) {
 
     if (isPositive) {
         let curScore = userEntry.scores.pos_score;
-        curScore += 2;
+        curScore += (2 * bonusMulti);
         userEntry.scores.pos_score = curScore;
         await userEntry.save();
         console.log(`Successfully updated ${userEntry.username}'s score!`);
@@ -71,7 +71,7 @@ async function updateUserScore(userEntry, isPositive, isRinri) {
     }
 
     let curScore = userEntry.scores.neg_score;
-    curScore += -2;
+    curScore += (-2 * bonusMulti);
     userEntry.scores.neg_score = curScore;
     await userEntry.save();
     console.log(`Successfully updated ${userEntry.username}'s score!`);
