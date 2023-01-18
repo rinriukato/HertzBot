@@ -3,6 +3,8 @@ const { requestDrink, giveDrink } = require('../message-respond/request-drink');
 const { sendChristmas } = require('../message-respond/send-christmas');
 const { sendHalloween } = require('../message-respond/send-halloween')
 const { twosSystem } = require('../message-respond/twos-system');
+const { reactEmote } = require('../message-respond/react-emote');
+const { sendEmbedFail } = require('../message-respond/send-embed-fail');
 
 module.exports = {
 	name: 'messageCreate',
@@ -13,7 +15,8 @@ module.exports = {
 
 		console.log('User send a message');
 
-		// Chance reply "Welcome" to any thank you
+		reactEmote(message);
+
 		if (message.content.toLowerCase().includes("thank")) {
 			if (message.content.toLowerCase().includes('hertz')) {
 				message.reply('No problem :)');
@@ -23,25 +26,26 @@ module.exports = {
 			return;
 		}
 
-		// User asking for a drink
 		if (requestDrink(message.content.toLowerCase())) {
 			await giveDrink(message);
 			return;
 		}
 
-		// User says: "Tommorrow is christmas!"
 		if (message.content.toLowerCase().includes('tomorrow is christmas')) {
 			await sendChristmas(message);
 			return;
 		}
 
-		// User says: "Tomorrow is halloween!"
 		if (message.content.toLowerCase().includes('tomorrow is halloween')) {
 			await sendHalloween(message);
 			return;
 		}
 
-		// User sends a +2 / -2 to another user
+		if (message.content.toLowerCase().includes('embed fail')) {
+			await sendEmbedFail(message);
+			return;
+		}
+
 		if (message.reference != null && (message.content === '+2' || message.content ==='-2')) {
 			await twosSystem(message);
 			return;

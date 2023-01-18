@@ -1,17 +1,17 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, BaseCommandInteraction } = require('discord.js');
 const { emotes } = require('../assets');
 const { findUserCreate, isUserOffCooldown, getCooldownTime } = require('../db-utils/user-utils');
+const { createAlignment } = require('../command-utils/create-alignment');
 
 const drinks = ["milkis", "teas", "bubble teas", "milks", "coffees", "juices", "colas", "waters"];
-const drinkEmotes = [emotes.MILKIS_EMOTE,":tea:",":bubble_tea:", ":milk:", ":coffee:", ":beverage_box:", emotes.COLA_EMOTE ,emotes.WATER_EMOTE];
-
-// ADD SUPPORT TO LOOK UP OTHER USER'S POINTS
+const drinkEmotes = [emotes.MILKIS_EMOTE,":tea:",":bubble_tea:", ":milk:", ":coffee:", ":beverage_box:", emotes.COLA_EMOTE ,emotes.WATER_EMOTE, ":sake:"];
+const spaces = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t";
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('user-info')
-        .setDescription('Displays user information')
+        .setDescription('Displays the user\'s info card. See stuff like their favorite drink or server rating!')
         .addUserOption((option) => 
             option
                 .setName('user')
@@ -36,34 +36,36 @@ module.exports = {
 
         
         const name = author.username;
-        //const avatarUrl = author.user.displayAvatarURL();
-        const scores = [author.scores.pos_score, author.scores.rinri_pos_score, 
-                        author.scores.neg_score,author.scores.rinri_neg_score];
+        const scores = [
+                        author.scores.pos_score, author.scores.rinri_pos_score, 
+                        author.scores.neg_score,author.scores.rinri_neg_score
+                    ];
 
-        const drinksHistory = [author.drinks_ordered.milkis, author.drinks_ordered.tea,
-                               author.drinks_ordered.bubble_tea, author.drinks_ordered.coffee,
-                               author.drinks_ordered.juice, author.drinks_ordered.cola,
-                               author.drinks_ordered.water];
+        const drinksHistory = [
+                               author.drinks_ordered.milkis, author.drinks_ordered.tea,
+                               author.drinks_ordered.bubble_tea, author.drinks_ordered.milk,
+                               author.drinks_ordered.coffee, author.drinks_ordered.juice, 
+                               author.drinks_ordered.cola, author.drinks_ordered.water,
+                               author.drinks_ordered.sake,
+                           ];
         
         const max = Math.max(...drinksHistory);
         const money = author.battle_status.money;
         const index = drinksHistory.indexOf(max);
         const totalScore = (scores[0] + scores[2]);
-        const cooldownStatus = isUserOffCooldown(author.battle_status.atk_cd) ? 'Ready to go!' : `Ready in ${getCooldownTime(author.battle_status.atk_cd).toString()} minute(s)`;
+        const cooldownStatus = isUserOffCooldown(author.battle_status.atk_cd) ? '\`Ready to go!\`' : `\`Ready in ${getCooldownTime(author.battle_status.atk_cd).toString()} minute(s)\``;
+        const alignmentBar = createAlignment(totalScore);
 
         const userEmbed = new MessageEmbed()
             .setColor(0x0099FF)
             .setTitle(`:page_with_curl: ${name}'s User Card`)
-            //.setThumbnail(avatarUrl)
             .addFields(
-                { name: ':star: Rating:', value: totalScore.toString(), inline:true},
-                { name: `${drinkEmotes[index]} Most Ordered Drink`, value: `Ordered ${drinksHistory[index]} ${drinks[index]}`, inline:true},
-                { name: `Money`, value: `${money}`, inline:true},
-                { name: '\u200B', value: '\u200B', inline:true },
-                { name: ':clock1: Cooldown Status', value: cooldownStatus, inline:true },
-                { name: 'Element', value: author.battle_status.elem, inline:true },
-                { name: 'Total +2 received', value: `+${(scores[0]).toString()}`, inline: true },
-                { name: 'Total -2 received', value: `${(scores[2]).toString()}`, inline: true },
+                { name: ':star: Rating:', value: `\`${totalScore.toString()}\``, inline:true},
+                { name: `${drinkEmotes[index]} Fav Drink:`, value: `\`Ordered ${drinksHistory[index]} time(s)\``, inline:true},
+                { name: `:coin: Money:`, value: `\`${money}\``, inline:true},
+                //{ name: '\u200B', value: '\u200B', inline:true },
+                { name: ':clock1: Cooldown Status:', value: cooldownStatus, inline:true },
+                { name: `-2${spaces}+2`, value: `${alignmentBar}`, inline: false },
             )
 
         await interaction.reply({ embeds: [userEmbed] });

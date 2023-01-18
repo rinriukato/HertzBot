@@ -1,21 +1,17 @@
 const { findGuildCreate, updateTwosGiven, isCorrectTarget, isBattleActive, 
         setBattleTarget, startWaveBattle, setComboLevel, endWaveBattle, 
-        getComboLevel, setTotalDmg, getTotalDmg, getTargetName} = require('../db-utils/guild-utils');
+        getComboLevel, setTotalDmg, getTotalDmg, getTargetName
+    } = require('../db-utils/guild-utils');
 
 const { findUserCreate, updateUserScore, updateAuthorCooldown, isUserOffCooldown, 
-        getCooldownTime} = require('../db-utils/user-utils');
+        getCooldownTime
+    } = require('../db-utils/user-utils');
 
 async function twosSystem (message) {
-    // Get guild data
+
     const guild = await findGuildCreate(message.guild);
-
-    // Get author data
     const author = await findUserCreate(message.author, message.guild);
-
-    // Get referenced person data
     const mentionedUser = await findUserCreate(message.mentions.repliedUser, message.guild);
-    
-    // Get id of replied message
     const referenceMsg = message.reference.messageId;
 
     // Check if the author can use this command
@@ -24,44 +20,45 @@ async function twosSystem (message) {
         return;
     }
 
-    /*
     // Author cannot attack if they are on cooldown
     if (!isUserOffCooldown(author.battle_status.atk_cd)) {
-        await message.reply(`On cooldown! ${getCooldownTime(author.battle_status.atk_cd)} minute(s) untill this command is ready!`);
+        await message.reply(`On cooldown! ${getCooldownTime(author.battle_status.atk_cd)} minute(s) until this command is ready!`)
+            .then(msg => {setTimeout(() => msg.delete(), 30 * 1000)});
         return;
     }
-    */
-
+    
     // Check if the referenced member is being attack again
     if (isCorrectTarget(guild, mentionedUser.user_id, referenceMsg)) {
-        // Is there a battle going on right now?
+
         if (!isBattleActive(guild)) {
-            // Set reference memeber as target
             await setBattleTarget(guild, mentionedUser, referenceMsg);
-            // Activate Battle
             await startWaveBattle(guild);
-            console.log("A new target has been set: " + mentionedUser.username);
         } 
-
-        // Increment combo level
         await setComboLevel(guild, reset=false);
-        console.log("Incrementing combo level");
+    
+    // Start of server when there is no target set
+    } else if (getTargetName === null) {
+        await setBattleTarget(guild, mentionedUser, referenceMsg);
+        await startWaveBattle(guild);
+        console.log("A new target has been set: " + mentionedUser.username);
 
+    // Chain has been broken. Reset battle
     } else {
-        // Broken chain, reset
-        await message.channel.send(`Chain Broken!${getTargetName(guild)} has recieved ${getTotalDmg(guild)} points!`);
+        const comboLvl = getComboLevel(guild)
+
+        // Display only if there is a damage multiplier to prevent chat spam.
+        if (comboLvl >= 2) {
+            await message.channel.send(`${comboLvl} Hit Combo!! ${getTargetName(guild)} has recieved ${getTotalDmg(guild)} points!`);
+        }
         await endWaveBattle(guild);
         await setComboLevel(guild, reset=true);
 
         // Set the new user as the new target for the next chain
         await setBattleTarget(guild, mentionedUser, referenceMsg);
-        console.log("Chain has been broken. Setting the new target to: " + mentionedUser.username);
         await setTotalDmg(guild, dmg=0, reset=true);
-
     }
 
     const bonusMulti = getMultiBonus(getComboLevel(guild));
-    console.log('The current bonus is:  ' + String(bonusMulti));
 
     // Update user scores and record in the guild entry
     if (message.content === '+2') {

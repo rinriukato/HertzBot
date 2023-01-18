@@ -90,6 +90,12 @@ async function updateGuildDrinks(guildEntry, drinkIndex) {
             guildEntry.server_drink_stats.water = drinkNum;
             break;
         }
+        case 8: {
+            let drinkNum = guildEntry.server_drink_stats.sake;
+            drinkNum += 1;
+            guildEntry.server_drink_stats.sake = drinkNum;
+            break;
+        }
         default: {
             console.error(`An error has occured. Unexpected value when updating server drink log: ${drinkIndex}`);
             return;
@@ -135,14 +141,6 @@ async function updateServerVirusDel(guildEntry) {
     let curScore = guildEntry.wave_battle_history.virus_del;
     curScore++;
     guildEntry.wave_battle_history.virus_del = curScore;
-    await guildEntry.save();
-}
-
-// Update the servers card usage by 1
-async function updateServerCardsUsed(guildEntry) {
-    let curScore = guildEntry.wave_battle_history.cards_used;
-    curScore++;
-    guildEntry.wave_battle_history.cards_used = curScore;
     await guildEntry.save();
 }
 
@@ -242,7 +240,6 @@ module.exports = {
     updateTotalBattles,
     updateServerPlayerDel,
     updateServerVirusDel,
-    updateServerCardsUsed,
     endWaveBattle,
     setComboLevel,
     startBattleTimer,

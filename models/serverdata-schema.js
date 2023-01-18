@@ -24,7 +24,6 @@ const serverSchema = new mongoose.Schema({
         "virus_del": {type: Number, default: 0},
         "plus_twos_given": {type: Number, default: 0},
         "minus_twos_given": {type: Number, default: 0},
-        "cards_used": {type: Number, default: 0},
     },
     "server_drink_stats": {
         "milkis": {type: Number, default: 0},
@@ -35,7 +34,8 @@ const serverSchema = new mongoose.Schema({
         "juice": {type: Number, default: 0},
         "cola": {type: Number, default: 0},
         "water": {type: Number, default: 0},
-    }
+        "sake": {type: Number, default: 0}
+    },
 })
 
 module.exports = mongoose.model('serverData', serverSchema)
