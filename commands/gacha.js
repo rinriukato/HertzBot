@@ -26,8 +26,7 @@ module.exports = {
     async execute(interaction) {
         const gachaEmbed = new MessageEmbed()
             .setColor(COLOR)
-            .setTitle(`Gacha Time!`)
-            //.setThumbnail()
+            .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
             .setDescription('Time to waste your money!')
             .addFields(
                 {
@@ -110,7 +109,7 @@ module.exports = {
                 // Build result embed
                 const resultEmbed = new MessageEmbed()
                     .setColor(COLOR)
-                    .setTitle(`Gacha Time!`)
+                    .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
 
                 console.log(result);
                 switch (result) {
@@ -172,7 +171,7 @@ module.exports = {
                 // Frame 1
                 const gachaEmbed = new MessageEmbed()
                     .setColor(COLOR)
-                    .setTitle(`Gacha Time!`)
+                    .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
                     .setDescription(`💨 ${emotes.GACHAPON} *plop~*`);
                 await interaction.editReply({embeds: [gachaEmbed], components: []});
 

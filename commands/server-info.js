@@ -71,6 +71,41 @@ module.exports = {
                     value: `\`${(guild.server_drink_stats.sake).toString()}\``, 
                     inline: true
                 },
+                { 
+                    name: `${header} **Server Gacha History** ${header}`,
+                    value: ` `,
+                },
+                {
+                    name: ` `,
+                    value: `Capsules Collected: \`${guild.server_gacha_stats.total_rolls}\`
+                            Money Spent: \`${guild.server_gacha_stats.money_spent}\`\n`,
+                    inline: true 
+                },
+                {
+                    name: `Ultra Rares: `,
+                    value: `\`${guild.server_gacha_stats.pons.ultra_rare}\``,
+                    inline: true 
+                },
+                {
+                    name: `Super Rares: `,
+                    value: `\`${guild.server_gacha_stats.pons.super_rare}\``,
+                    inline: true 
+                },
+                {
+                    name: `Rares: `,
+                    value: `\`${guild.server_gacha_stats.pons.rare}\``,
+                    inline: true 
+                },
+                {
+                    name: `Uncommons: `,
+                    value: `\`${guild.server_gacha_stats.pons.uncommons}\``,
+                    inline: true 
+                },
+                {
+                    name: `Commons: `,
+                    value: `\`${guild.server_gacha_stats.pons.commons}\``,
+                    inline: true 
+                },
             )
         await interaction.reply({ embeds: [serverEmbed] });
     },

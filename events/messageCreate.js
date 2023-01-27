@@ -11,10 +11,10 @@ module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
 		
-		// Do not reply to self
-		if (message.author.id === client.user.id) return;
+		// Do not reply to self and ignore bot messages
+		if (message.author.id === client.user.id || message.author.bot === true) return;
 
-		console.log('User send a message');
+		// console.log('User send a message');
 
 		reactEmote(message);
 

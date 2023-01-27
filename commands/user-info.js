@@ -70,7 +70,7 @@ module.exports = {
                     inline:true
                 },
                 { 
-                    name: `:coin: Money:`,
+                    name: `:coin: Coins:`,
                     value: `\`${money}\``,
                     inline:true
                 },
@@ -85,8 +85,40 @@ module.exports = {
                     value: `${alignmentBar}`,
                     inline: false 
                 },
+                {
+                    name: `${emotes.GACHAPON} Gacha Stats -`,
+                    value: `Capsules Collected: \`${targetUser.gacha_stats.total_rolls}\`
+                            Money Spent: \`${targetUser.gacha_stats.money_spent}\`\n`,
+                    inline: true 
+                },
+                {
+                    name: `Ultra Rares: `,
+                    value: `\`${targetUser.gacha_stats.pons.ultra_rare}\``,
+                    inline: true 
+                },
+                {
+                    name: `Super Rares: `,
+                    value: `\`${targetUser.gacha_stats.pons.super_rare}\``,
+                    inline: true 
+                },
+                {
+                    name: `Rares: `,
+                    value: `\`${targetUser.gacha_stats.pons.rare}\``,
+                    inline: true 
+                },
+                {
+                    name: `Uncommons: `,
+                    value: `\`${targetUser.gacha_stats.pons.uncommons}\``,
+                    inline: true 
+                },
+                {
+                    name: `Commons: `,
+                    value: `\`${targetUser.gacha_stats.pons.commons}\``,
+                    inline: true 
+                },
             )
 
         await interaction.reply({ embeds: [userEmbed] });
     },
 };
+                            

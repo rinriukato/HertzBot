@@ -217,8 +217,6 @@ async function updatePlayerMoney(userEntry, amount, isNegative) {
     let balance = userEntry.battle_status.money;
     balance += amount;
 
-    console.log(`${balance} + ${amount} = ${balance + amount}`);
-
     if (balance < 0) {
         balance = 0;
     }

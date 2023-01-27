@@ -122,7 +122,12 @@ const COMMON_PRIZES = [
     `🪜 You got a ladder!\n "Specifically a *ladder*. Not a *step*-ladder."`,
     `🛵 You got a Vespa!\n "Now THAT'S Fooly Cooly!"`,
     `🅱️ You got a B!\n "😂😂😂😂👌"`,
-    
+    `🎊 You got a Spent Gacha Capsule? \n "You clean this stuff up for once.`,
+    `🛟 You got a Lifesaver! \n "That's a wrap!"`,
+    `💿 You got a CD!\n "Say it. Say the line. I dare you."`,
+    `🚩 You got a red flag!\n "Probably a good idea to stop pulling now..."`,
+    `🧍‍♂️ You got a Standing Figure! \n"Standing here, I realize, you are just like me trying to make history. But who's to judge the right from wrong? When our guard is down I think we'll both agree that violence breeds violence"`,
+    `🥩 You got a steak!\n "Uhhhh, fsteak?"`,
 ];
 
 module.exports = {

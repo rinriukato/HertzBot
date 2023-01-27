@@ -5,7 +5,7 @@ const { emotes } = require(`../assets`);
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('help')
-	    .setDescription('Brief introduction of Hertz and the commands avaliable')
+	    .setDescription(`Brief introduction of Hertz and the commands avaliable`)
         .addStringOption(option =>
             option.setName(`command`)
             .setDescription('The name command or function you wish to learn about')
@@ -13,10 +13,12 @@ module.exports = {
             .addChoices(
                 { name: 'rps', value: 'rps'},
                 { name: 'daily', value: 'daily'},
+                { name: 'gacha', value: 'gacha'},
                 { name: 'drink-history', value: 'drink-history'},
                 { name: 'server-info', value: 'server-info'},
                 { name: 'user-info', value: 'user-info'},
                 { name: '2s-rating', value: '2s-rating'},
+                { name: 'drink-request', value: 'drink-request'},
             )
         ),
 
@@ -31,13 +33,13 @@ module.exports = {
 
             const helpEmbed = new MessageEmbed()
             .setColor(0x228B22)
-            .setTitle(`Hertz's Help Page`)
+            .setTitle(`${emotes.HERTZ_EMOTE} Hertz's Help Page`)
             .setThumbnail(hertzImage)
             .setDescription(helpMessage)
             .addFields(
                 {
                     name: ":partying_face: Fun Commands:",
-                    value: "\`rps\`",
+                    value: "\`rps\` \`gacha\`",
                     inline: false,
                 },
                 {
@@ -52,7 +54,7 @@ module.exports = {
                 },
                 {
                     name: ":dvd: Systems",
-                    value: "\`2s-rating\`",
+                    value: "\`2s-rating\` \`drink-request\`",
                     inline: false,
                 }
             )
@@ -65,7 +67,7 @@ module.exports = {
             case 'rps': {
                 const helpEmbed = new MessageEmbed()
                 .setColor(0x228B22)
-                .setTitle(`Command help for rps`)
+                .setTitle(`${emotes.HERTZ_EMOTE} Command help for rps`)
                 .setDescription(`Play a simple game of Rock-Paper-Scissors with Hertz!. Pick one of the options avaliable and Hertz (totally using advance AI) will make his choice as well. 
                 There are no stakes involved so just have fun with it`)
                 .addFields(
@@ -79,10 +81,26 @@ module.exports = {
                 await interaction.reply({ embeds: [helpEmbed] });
                 return;
             }
+            case 'gacha': {
+                const helpEmbed = new MessageEmbed()
+                .setColor(0x228B22)
+                .setTitle(`${emotes.HERTZ_EMOTE} Command help for gacha`)
+                .setDescription(`Insert a 100 :coin: for a pull at the gachapon! Rates and prizes are listed when using the commands`)
+                .addFields(
+                        {
+                            name: `**Usage**`,
+                            value: `\`/gacha\` - Type in this command and the game will get started.`,
+                            inline: false,
+                        }
+                    )
+                
+                await interaction.reply({ embeds: [helpEmbed] });
+                return;
+            }
             case 'daily': {
                 const helpEmbed = new MessageEmbed()
                 .setColor(0x228B22)
-                .setTitle(`Command help for daily`)
+                .setTitle(`${emotes.HERTZ_EMOTE} Command help for daily`)
                 .setDescription(`Recieve 100 Money. You can use this command again every 24-hour period since you've last used it.`)
                 .addFields(
                         {
@@ -98,7 +116,7 @@ module.exports = {
             case 'drink-history': {
                 const helpEmbed = new MessageEmbed()
                 .setColor(0x228B22)
-                .setTitle(`Command help for drink-history`)
+                .setTitle(`${emotes.HERTZ_EMOTE} Command help for drink-history`)
                 .setDescription(`A list of all the drinks the user has requested from Hertz. `)
                 .addFields(
                         {
@@ -119,7 +137,7 @@ module.exports = {
             case 'server-info': {
                 const helpEmbed = new MessageEmbed()
                 .setColor(0x228B22)
-                .setTitle(`Command help for server-info`)
+                .setTitle(`${emotes.HERTZ_EMOTE} Command help for server-info`)
                 .setDescription(`Displays information Hertz has gathered about this server. Such as the amount of [+2] given out or the server's favorite drink!`)
                 .addFields(
                         {
@@ -135,7 +153,7 @@ module.exports = {
             case 'user-info': {
                 const helpEmbed = new MessageEmbed()
                 .setColor(0x228B22)
-                .setTitle(`Command help for user-info`)
+                .setTitle(`${emotes.HERTZ_EMOTE} Command help for user-info`)
                 .setDescription(`Displays the user's information card. This will show infomation such as the user's rating, their favorite drink, and their rating alignment!`)
                 .addFields(
                         {
@@ -153,10 +171,45 @@ module.exports = {
                 await interaction.reply({ embeds: [helpEmbed] });
                 break;
             }
+            case 'drink-request': {
+                const helpEmbed = new MessageEmbed()
+                .setColor(0x228B22)
+                .setTitle(`${emotes.HERTZ_EMOTE} Explaination of the drink ordering system`)
+                .setDescription(`Hertz also doubles as a vending machine with a decent selection of drinks to choose from! Simply ask him and he'll go and despense the drink.`)
+                .addFields(
+                        {
+                            name: `**How do I request a drink?**`,
+                            value: `Simply ask him politely as you would anyone. Such as "I would like a <drink-name>" or "One <drink-name> please!"\n`,
+                            inline: false,
+                        },
+                        {
+                            name: `**What drinks does Hertz serve?**`,
+                            value: `At the moment, Hertz serves:\n
+                                    ${emotes.MILKIS_EMOTE}Milkis (Its a Milk Soda from South Korea)
+                                    :tea:Tea
+                                    :bubble_tea: Boba Tea
+                                    :milk: Milk
+                                    :coffee: Coffee
+                                    :beverage_box: Juice
+                                    ${emotes.COLA_EMOTE} Cola
+                                    ${emotes.WATER_EMOTE} Water
+                                    :sake: Sake`,
+                            inline: false,
+                        },
+                        {
+                            name: `**What else does this drink requesting system do?**`,
+                            value: `Besides reply with a drink, Hertz does keep track of your favorite drink and appends it to your user card! Additionally, Hertz keeps record of the drinks ordered by everyone in the server. A bit of insight on everyone's favorite beverages!\n`,
+                            inline: false,
+                        },
+                    )
+                
+                await interaction.reply({ embeds: [helpEmbed] });
+                break;
+            }
             case '2s-rating': {
                 const helpEmbed = new MessageEmbed()
                 .setColor(0x228B22)
-                .setTitle(`Explaination of [+2][-2] Rating System`)
+                .setTitle(`${emotes.HERTZ_EMOTE} Explaination of [+2][-2] Rating System`)
                 .setDescription(
                                 `The [+2] Rating System is similar to Likes/Dislikes or Upvotes/Downvotes
                                 in the sense you can rate or give an award to another user's message or post they've made in the server.
