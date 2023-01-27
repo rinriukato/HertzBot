@@ -49,6 +49,17 @@ const userSchema = new mongoose.Schema({
         "water": {type: Number, default: 0},
         "sake": {type: Number, default: 0}
     },
+    "gacha_stats": {
+        "total_rolls": {type: Number, default: 0},
+        "money_spent": {type: Number, default: 0},
+        "pons": {
+            "commons": {type: Number, default: 0},
+            "uncommons": {type: Number, default: 0},
+            "rare": {type: Number, default: 0},
+            "super_rare": {type: Number, default: 0},
+            "ultra_rare": {type: Number, default: 0},
+        }
+    }
 
 })
 

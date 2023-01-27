@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
+const { MessageActionRow, MessageButton, MessageEmbed, ButtonInteraction } = require('discord.js');
 
 // Rock == 0
 // Paper == 1
@@ -48,13 +48,15 @@ module.exports = {
 		const filter = (buttonInteraction) => {
 
 			if (interaction.user.id === buttonInteraction.user.id) return true;
-			return interaction.reply({content: "This isn't your game!", ephemeral: true});
+
+            buttonInteraction.reply({content: "This isn't your game!", ephemeral: true});
+			return false 
 		};
 
 		const collector = interaction.channel.createMessageComponentCollector({filter, max: 1});
- 
-		collector.on('end', async (ButtonInteraction) => {
-			const id = ButtonInteraction.first().customId;
+
+        const collectionHandler = async (ButtonInteraction) => {
+            const id = ButtonInteraction.first().customId;
             let playerMove;
 
 			if (id === 'rock') {
@@ -99,6 +101,8 @@ module.exports = {
                     content: `${moveToString(botMove)}! You've lost!`
                 });
             }
-		})
+        }
+        
+		collector.on('end', (ButtonInteraction) => collectionHandler(ButtonInteraction).catch(console.error));
     },
 };

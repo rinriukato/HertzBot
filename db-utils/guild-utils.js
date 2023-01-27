@@ -66,7 +66,7 @@ async function updateGuildDrinks(guildEntry, drinkIndex) {
         case 4: {
             let drinkNum = guildEntry.server_drink_stats.coffee;
             drinkNum += 1;
-            guildEntry.server_drink_stats.cofee = drinkNum;
+            guildEntry.server_drink_stats.coffee = drinkNum;
             break;
         }
         // juice
@@ -115,7 +115,7 @@ async function updateTwosGiven(guildEntry, isPositive) {
     } else  {
         let curScore = guildEntry.wave_battle_history.minus_twos_given;
         curScore++;
-        guildEntry.wave_battle_history.plus_twos_given = curScore;
+        guildEntry.wave_battle_history.minus_twos_given = curScore;
     }
     await guildEntry.save();
 }
@@ -149,7 +149,7 @@ function isBattleActive(guildEntry) {
 }
 
 async function startWaveBattle(guildEntry) {
-    guildEntry.wave_battle_status.isBattleActive = true;
+    guildEntry.wave_battle_status.is_battle_active = true;
     await guildEntry.save();
 }
 
@@ -180,25 +180,6 @@ async function setComboLevel(guildEntry, reset) {
     await guildEntry.save();
 }
 
-async function startBattleTimer(guildEntry) {
-    guildEntry.wave_battle_status.battle_timer = Date.now();
-    await guildEntry.save();
-}
-
-function isBattleExpire(startTime) {
-    const cooldownThreshold = 10;
-    let timeElapsed = Date.now() - startTime; // in miliseconds
-    timeElapsed = Math.floor(timeElapsed/ 60000); // convert to minutes
-
-    return timeElapsed >= cooldownThreshold ? true : false;
-}
-
-// Return string representing how long til cooldown is over
-function getBattleTimeRemaining(startTime) {
-    const timeBase = 10;
-    return timeBase - Math.floor((Date.now() - startTime)/ 60000);
-}
-
 async function setBattleTarget(guildEntry, target, msgId) {
     guildEntry.wave_battle_status.trg_user_id = target.user_id;
     guildEntry.wave_battle_status.trg_user_name = target.username;
@@ -218,7 +199,7 @@ async function setTotalDmg(guildEntry, dmg, reset) {
         let cur_dmg = guildEntry.wave_battle_status.total_dmg;
         cur_dmg += dmg;
         guildEntry.wave_battle_status.total_dmg = cur_dmg; 
-    }  else {
+    } else {
         guildEntry.wave_battle_status.total_dmg = 0; 
     }
 
@@ -233,6 +214,48 @@ function getTargetName(guildEntry) {
     return guildEntry.wave_battle_status.trg_user_name;
 }
 
+async function incrementTotalRolls(guildEntry) {
+    guildEntry.server_gacha_stats.total_rolls = ++guildEntry.server_gacha_stats.total_rolls;
+    await guildEntry.save();
+}
+
+function getTotalRolls(guildEntry) {
+    return guildEntry.server_gacha_stats.total_rolls;
+}
+
+async function setMoneySpent(guildEntry, moneySpent) {
+    guildEntry.server_gacha_stats.money_spent = guildEntry.server_gacha_stats.money_spent + moneySpent;
+    await guildEntry.save();
+}
+
+function getMoneySpent(guildEntry) {
+    return guildEntry.server_gacha_stats.money_spent;
+}
+
+async function incrementPons(guildEntry, ponType) {
+    switch (ponType) {
+        case 'Common':
+            guildEntry.server_gacha_stats.pons.commons = ++guildEntry.server_gacha_stats.pons.commons;
+            break;
+        case 'Uncommon':
+            guildEntry.server_gacha_stats.pons.uncommons = ++guildEntry.server_gacha_stats.pons.uncommons;
+            break;
+        case 'Rare':
+            guildEntry.server_gacha_stats.pons.rare = ++guildEntry.server_gacha_stats.pons.rare;
+            break;
+        case 'Super Rare':
+            guildEntry.server_gacha_stats.pons.super_rare = ++guildEntry.server_gacha_stats.pons.super_rare;
+            break;
+        case 'Ultra Rare':
+            guildEntry.server_gacha_stats.pons.super_rare = ++guildEntry.server_gacha_stats.pons.ultra_rare;
+            break;
+        default: 
+            console.error(`Unexpected value has been recieved in incrementPons function. ${ponType}`);
+    }
+
+    await guildEntry.save();
+}
+
 module.exports = {
     findGuildCreate,
     updateGuildDrinks,
@@ -242,9 +265,6 @@ module.exports = {
     updateServerVirusDel,
     endWaveBattle,
     setComboLevel,
-    startBattleTimer,
-    isBattleExpire,
-    getBattleTimeRemaining,
     getComboLevel,
     isBattleActive,
     setBattleTarget,
@@ -253,4 +273,9 @@ module.exports = {
     setTotalDmg,
     getTotalDmg,
     getTargetName,
+    incrementTotalRolls,
+    getTotalRolls,
+    setMoneySpent,
+    getMoneySpent,
+    incrementPons,
 }

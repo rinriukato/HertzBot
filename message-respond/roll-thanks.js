@@ -14,7 +14,6 @@ function getRandomInt(max) {
 async function rollThanks (message) {
     for (let i = 0; i < 3; i++) {
         let diceRoll = getRandomInt(6);
-        console.log(`The user rolls a ${diceRoll}`);
         if (diceRoll !== 1) return;
 
         message.reply(replies[i]);

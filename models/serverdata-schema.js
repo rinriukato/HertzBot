@@ -15,7 +15,6 @@ const serverSchema = new mongoose.Schema({
         "trg_user_name": {type: String, default: null},
         "trg_msg_id": { type: Number, default: null },
         "combo_lvl": { type: Number,default: 0 },
-        "battle_timer": { type: Number, default: null },
         "total_dmg": {type: Number, default: 0},
     },
     "wave_battle_history": {
@@ -36,6 +35,17 @@ const serverSchema = new mongoose.Schema({
         "water": {type: Number, default: 0},
         "sake": {type: Number, default: 0}
     },
+    "server_gacha_stats": {
+        "total_rolls": {type: Number, default: 0},
+        "money_spent": {type: Number, default: 0},
+        "pons": {
+            "commons": {type: Number, default: 0},
+            "uncommons": {type: Number, default: 0},
+            "rare": {type: Number, default: 0},
+            "super_rare": {type: Number, default: 0},
+            "ultra_rare": {type: Number, default: 0},
+        }
+    }
 })
 
 module.exports = mongoose.model('serverData', serverSchema)

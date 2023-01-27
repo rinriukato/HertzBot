@@ -7,6 +7,25 @@ const { findUserCreate, updateUserScore, updateAuthorCooldown, isUserOffCooldown
         getCooldownTime
     } = require('../db-utils/user-utils');
 
+const COMBO_TIME_LIMIT = 600; // In seconds
+
+const COMBO_LVL_1 = 1.0;
+const COMBO_LVL_2 = 1.5;
+const COMBO_LVL_3 = 2.0;
+const COMBO_LVL_4 = 2.5;
+const COMBO_LVL_5 = 3.0;
+const COMBO_LVL_6 = 3.5;
+const COMBO_LVL_MAX = 4.0;
+
+const COMBO_RANGE_1 = 2;
+const COMBO_RANGE_2 = 4;
+const COMBO_RANGE_3 = 6;
+const COMBO_RANGE_4 = 8;
+const COMBO_RANGE_5 = 10;
+const COMBO_RANGE_MAX = 12;
+
+let timeoutID;
+
 async function twosSystem (message) {
 
     const guild = await findGuildCreate(message.guild);
@@ -33,6 +52,8 @@ async function twosSystem (message) {
         if (!isBattleActive(guild)) {
             await setBattleTarget(guild, mentionedUser, referenceMsg);
             await startWaveBattle(guild);
+            timeoutID = setTimeout(() => endChainTimeExpire(message), 1000 * COMBO_TIME_LIMIT);
+            console.log('Set Timer: ' + timeoutID);
         } 
         await setComboLevel(guild, reset=false);
     
@@ -50,8 +71,11 @@ async function twosSystem (message) {
         if (comboLvl >= 2) {
             await message.channel.send(`${comboLvl} Hit Combo!! ${getTargetName(guild)} has recieved ${getTotalDmg(guild)} points!`);
         }
+        
         await endWaveBattle(guild);
         await setComboLevel(guild, reset=true);
+        clearTimeout(timeoutID);
+        console.log('Successfully cleared ID: ' + timeoutID);
 
         // Set the new user as the new target for the next chain
         await setBattleTarget(guild, mentionedUser, referenceMsg);
@@ -77,14 +101,26 @@ async function twosSystem (message) {
     return;
 }
 
+async function endChainTimeExpire(message) {
+    // Fetch updated guild object
+    const guild = await findGuildCreate(message.guild);
+
+    await message.channel.send(`Time is up! This chain has been expired! ${getTargetName(guild)} has recieved ${getTotalDmg(guild)} points!`);
+    await endWaveBattle(guild);
+    await setComboLevel(guild, reset=true);
+    await setTotalDmg(guild, dmg=0, reset=true);
+    //console.log('Releasing timeoutID: ' + timeoutID);
+}
+
+
 function getMultiBonus(comboLvl) {
-    if (comboLvl >= 12) return 4.0;
-    else if (comboLvl >= 10) return 3.5;
-    else if (comboLvl >= 8) return 3.0;
-    else if (comboLvl >= 6) return 2.5;
-    else if (comboLvl >= 4) return 2.0;
-    else if (comboLvl >= 2) return 1.5;
-    else return 1.0;
+    if (comboLvl >= COMBO_RANGE_MAX) return COMBO_LVL_MAX;
+    else if (comboLvl >= COMBO_RANGE_5) return COMBO_LVL_6;
+    else if (comboLvl >= COMBO_RANGE_4) return COMBO_LVL_5;
+    else if (comboLvl >= COMBO_RANGE_3) return COMBO_LVL_4;
+    else if (comboLvl >= COMBO_RANGE_2) return COMBO_LVL_3;
+    else if (comboLvl >= COMBO_RANGE_1) return COMBO_LVL_2;
+    else return COMBO_LVL_1
 }
 
 module.exports = {

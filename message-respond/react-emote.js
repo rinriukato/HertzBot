@@ -1,4 +1,4 @@
-const MAX = 100;
+const MAX = 300;
 
 async function reactEmote (message) {
     if (getRandomInt(MAX) === 27) {

@@ -5,6 +5,7 @@ const { sendHalloween } = require('../message-respond/send-halloween')
 const { twosSystem } = require('../message-respond/twos-system');
 const { reactEmote } = require('../message-respond/react-emote');
 const { sendEmbedFail } = require('../message-respond/send-embed-fail');
+const { sendFireworks } = require('../message-respond/send-newyears');
 
 module.exports = {
 	name: 'messageCreate',
@@ -16,6 +17,12 @@ module.exports = {
 		console.log('User send a message');
 
 		reactEmote(message);
+
+		// For bidoofis :)
+		if (message.content.includes("Bidoofis")) {
+			message.reply('bidoofis*');
+			return;
+		}
 
 		if (message.content.toLowerCase().includes("thank")) {
 			if (message.content.toLowerCase().includes('hertz')) {
@@ -38,6 +45,11 @@ module.exports = {
 
 		if (message.content.toLowerCase().includes('tomorrow is halloween')) {
 			await sendHalloween(message);
+			return;
+		}
+
+		if (message.content.toLowerCase().includes('tomorrow is new years') || message.content.toLowerCase().includes('hertz send firework')) {
+			await sendFireworks(message);
 			return;
 		}
 

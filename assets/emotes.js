@@ -20,6 +20,9 @@ const BAR_R = "<:bar_r:1064632650477862943>";
 const BAR_O = "<:bar_o:1064632640386383962>";
 const BAR_G = "<:bar_g:1064632630517186650>";
 
+// Emotes for Gachapon Machine
+const GACHAPON = "<:gachapon:1067169425213620344>";
+
 module.exports = {
     HERTZ_EMOTE,
     TODD_EMOTE,
@@ -35,4 +38,5 @@ module.exports = {
     BAR_R,
     BAR_G,
     BAR_O,
+    GACHAPON,
 };

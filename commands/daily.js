@@ -12,9 +12,10 @@ module.exports = {
         // Cannot use command if money command is on cooldown
         if (!isMoneyOffCooldown(author.battle_status.money_cd)) {
             await interaction.reply({
-                                    content: `On cooldown! ${getMoneyCooldownTime(author.battle_status.money_cd)} hours(s) untill this command is ready!`, 
-                                    ephemeral: true
-                                });
+                content: `On cooldown! ${getMoneyCooldownTime(author.battle_status.money_cd)} hours(s) untill this command is ready!`, 
+                ephemeral: true
+            });
+            
             return;
         }
         

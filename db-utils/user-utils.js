@@ -29,8 +29,8 @@ async function createNewUserEntry(userId, userName, discriminator, guildId, guil
         guild_id: guildId,
         guild_name: guildName,
         battle_status: {
-            atk_cd: Date.now(),
-            money_cd: Date.now(),
+            atk_cd: new Date(0),
+            money_cd: new Date(0),
         }
     });
 
@@ -79,6 +79,7 @@ async function updateUserScore(userEntry, isPositive, bonusMulti, isRinri) {
 
 // Expected: UserDoc from db, int for what entry to make changes to
 async function updateUserDrinks(userEntry, drinkIndex) {
+    
     switch(drinkIndex) {
         // milkis
         case 0: {
@@ -112,7 +113,7 @@ async function updateUserDrinks(userEntry, drinkIndex) {
         case 4: {
             let drinkNum = userEntry.drinks_ordered.coffee;
             drinkNum += 1;
-            userEntry.drinks_ordered.cofee = drinkNum;
+            userEntry.drinks_ordered.coffee = drinkNum;
             break;
         }
         // juice
@@ -251,6 +252,48 @@ function getMoneyCooldownTime(lastUsed) {
     return cooldownThreshold - Math.floor((Date.now() - lastUsed)/ 3.6e+6);
 }
 
+async function incrementUserTotalRolls(userEntry) {
+    userEntry.gacha_stats.total_rolls = ++userEntry.gacha_stats.total_rolls;
+    await userEntry.save();
+}
+
+function getUserTotalRolls(userEntry) {
+    return userEntry.gacha_stats.total_rolls;
+}
+
+async function setUserMoneySpent(userEntry, moneySpent) {
+    userEntry.gacha_stats.money_spent += moneySpent;
+    await userEntry.save();
+}
+
+function getUserMoneySpent(userEntry) {
+    return userEntry.gacha_stats.money_spent;
+}
+
+async function incrementUserPons(userEntry, ponType) {
+    switch (ponType) {
+        case 'Common':
+            userEntry.gacha_stats.pons.commons = ++userEntry.gacha_stats.pons.commons;
+            break;
+        case 'Uncommon':
+            userEntry.gacha_stats.pons.uncommons = ++userEntry.gacha_stats.pons.uncommons;
+            break;
+        case 'Rare':
+            userEntry.gacha_stats.pons.rare = ++userEntry.gacha_stats.pons.rare;
+            break;
+        case 'Super Rare':
+            userEntry.gacha_stats.pons.super_rare = ++userEntry.gacha_stats.pons.super_rare;
+            break;
+        case 'Ultra Rare':
+            userEntry.gacha_stats.pons.super_rare = ++userEntry.gacha_stats.pons.ultra_rare;
+            break;
+        default: 
+            console.error(`Unexpected value has been recieved in incrementUserPons function. ${ponType}`);
+    }
+
+    await userEntry.save();
+}
+
 module.exports = {
     findUserCreate, 
     updateUserScore,
@@ -267,4 +310,9 @@ module.exports = {
     getMoneyCooldownTime,
     isMoneyOffCooldown,
     getPlayerMoney,
+    incrementUserTotalRolls,
+    getUserTotalRolls,
+    setUserMoneySpent,
+    getUserMoneySpent,
+    incrementUserPons,
 }
