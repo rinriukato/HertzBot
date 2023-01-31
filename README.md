@@ -112,17 +112,3 @@ HERTZ NOTIFICATION: [APPEARS AGAIN IF MULTIPLIER LEVELS UP]
 
 ## Closing Remarks
 The points are ultimately meaningless as they currently have no real value or usage within the box context. Just have fun and mess around with it.
-
-## TASK LIST
-- [x] Add database intergration with Hertz
-- [x] Develop basis for +2|-2 System
-- [x] Thanks roll
-- [x] Remake Milkis functionality
-- [x] Remake basic message handling from python
-- [ ] Have a "quote" storage featuring database adding, and message searching
-- [X] Basic game interaction: RPS and the like for added points
-- [X] Soda Machine / Shop Options
-- [X] Create a cooldown mechanism when requesting drinks, to prevent spam and overrunning database writing
-- [X] Funny +2 / -2 Rating system
-- [ ] Admin controls such as enabling the system on the server
-- [ ] User opting in or out to the twos system
