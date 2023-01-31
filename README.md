@@ -111,4 +111,4 @@ HERTZ NOTIFICATION: [APPEARS AGAIN IF MULTIPLIER LEVELS UP]
 
 
 ## Closing Remarks
-The points are ultimately meaningless as they currently have no real value or usage within the box context. Just have fun and mess around with it.
+The points are ultimately meaningless as they currently have no real value or usage within the box context. Just have fun and mess around with it
