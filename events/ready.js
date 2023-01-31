@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+const { mongoUrl } = require('../config.json')
 
 module.exports = {
     name: 'ready',
     once: true,
     async execute(client) {
         try {
-            await mongoose.connect(process.env.MONGO_URI, {
+            await mongoose.connect(mongoUrl, {
                 keepAlive: true
             }) 
         } catch (err) {
