@@ -25,12 +25,13 @@ module.exports = {
 		}
 
 		if (message.content === "bidoofis" && message.author.id === 655125193098002479) {
-			message.channel.send('\`\`\`*boom* \`\`\`');
+			await message.channel.send('\`\`\`*boom* \`\`\`');
+			return;
 		}
 
 		if (message.content.toLowerCase().includes("thank")) {
 			if (message.content.toLowerCase().includes('hertz')) {
-				message.reply('No problem :)');
+				await message.reply('No problem :)');
 				return;
 			}
 			await rollThanks(message);
