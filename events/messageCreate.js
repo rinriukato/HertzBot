@@ -24,6 +24,10 @@ module.exports = {
 			return;
 		}
 
+		if (message.content === "bidoofis" && message.author.id === 655125193098002479) {
+			message.channel.send('\`\`\`*boom* \`\`\`');
+		}
+
 		if (message.content.toLowerCase().includes("thank")) {
 			if (message.content.toLowerCase().includes('hertz')) {
 				message.reply('No problem :)');
