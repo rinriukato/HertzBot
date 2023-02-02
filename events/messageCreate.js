@@ -7,6 +7,8 @@ const { reactEmote } = require('../message-respond/react-emote');
 const { sendEmbedFail } = require('../message-respond/send-embed-fail');
 const { sendFireworks } = require('../message-respond/send-newyears');
 
+const iodosId = 655125193098002479;
+
 module.exports = {
 	name: 'messageCreate',
 	async execute(message, client) {
@@ -24,8 +26,8 @@ module.exports = {
 			return;
 		}
 
-		if (message.content === "bidoofis" && message.author.id === 655125193098002479) {
-			await message.channel.send('\`\`\`*boom* \`\`\`');
+		if ((message.content === 'bidoofis') && (message.author.id == iodosId)) {
+			await message.channel.send('*boom*');
 			return;
 		}
 
