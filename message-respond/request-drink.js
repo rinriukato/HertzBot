@@ -2,7 +2,7 @@ const { emotes } = require('../assets');
 const { findUserCreate, updateUserDrinks } = require('../db-utils/user-utils');
 const { findGuildCreate, updateGuildDrinks } = require('../db-utils/guild-utils');
 
-const requests = ["please", "can i have", "give me", "give", "one", "can i", "would like", "i want", "i could go for", "1"];
+const requests = ["please", "can i have", "give me", "one", "would like", "i want", "i could go for"];
 const drinks = ["milkis", "boba", "tea", "milk", "coffee", "juice", "cola", "water", "sake"];
 const drinkEmotes = [emotes.MILKIS_EMOTE,":bubble_tea:",":tea:", ":milk:", ":coffee:", ":beverage_box:", emotes.COLA_EMOTE ,emotes.WATER_EMOTE, ":sake:"];
 

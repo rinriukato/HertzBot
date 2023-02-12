@@ -8,6 +8,7 @@ const { sendEmbedFail } = require('../message-respond/send-embed-fail');
 const { sendFireworks } = require('../message-respond/send-newyears');
 
 const iodosId = 655125193098002479;
+const REQUEST_LENGTH_MAX = 100;
 
 module.exports = {
 	name: 'messageCreate',
@@ -40,7 +41,7 @@ module.exports = {
 			return;
 		}
 
-		if (requestDrink(message.content.toLowerCase())) {
+		if (requestDrink(message.content.toLowerCase()) && (message.content.length <= REQUEST_LENGTH_MAX)) {
 			await giveDrink(message);
 			return;
 		}
