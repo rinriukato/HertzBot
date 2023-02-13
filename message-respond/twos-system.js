@@ -69,7 +69,7 @@ async function twosSystem (message) {
 
         // Display only if there is a damage multiplier to prevent chat spam.
         if (comboLvl >= 2) {
-            await message.channel.send(`${comboLvl} Hit Combo!! ${getTargetName(guild)} has recieved ${getTotalDmg(guild)} points!`);
+            await message.channel.send(`${comboLvl} Hit Combo!! ${getTargetName(guild)} has received ${getTotalDmg(guild)} points!`);
         }
         
         await endWaveBattle(guild);
