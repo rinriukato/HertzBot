@@ -1,10 +1,21 @@
 const MAX = 300;
-const KEYWORD = "hiya-papaya";
+const SPAM_KEYWORDS = ["hiya-papaya", "IMG_6671.jpg","yunaka-gif-27462405"]
 
 
-async function reactEmote (message) {
-    if (getRandomInt(MAX) === 27 || message.content.toLowerCase().includes(KEYWORD)) {
+function reactEmote (message) {
+    if (getRandomInt(MAX) === 27) {
         message.react('🎑');
+    }
+}
+
+function reactSpam (message) {
+    const exist = (substring) => message.includes(substring);
+	if (SPAM_KEYWORDS.some(exist)) {
+        message.react('🎑');
+        message.react('🍚');
+        message.react('🍙');
+        message.react('🍘');
+        message.react('🛑');
     }
 }
 
