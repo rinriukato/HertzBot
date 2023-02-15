@@ -3,6 +3,7 @@
 // Face Emotes
 const TODD_EMOTE = "<:SmilingTODD_EMOTE:324707520272924684>";
 const HERTZ_EMOTE = "<:hertz:1064623739683213386>";
+const SPEECH_DELETE_EMOTE = "<:SpeachDelete:733058876265463899>";
 
 // Emotes for Vending Machine
 const MILKIS_EMOTE = "<:MILKIS_EMOTE:712773145559302165>";
@@ -26,6 +27,7 @@ const GACHAPON = "<:gachapon:1067169425213620344>";
 module.exports = {
     HERTZ_EMOTE,
     TODD_EMOTE,
+    SPEECH_DELETE_EMOTE,
     MILKIS_EMOTE,
     COLA_EMOTE,
     WATER_EMOTE,

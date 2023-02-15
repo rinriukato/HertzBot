@@ -3,7 +3,7 @@ const { requestDrink, giveDrink } = require('../message-respond/request-drink');
 const { sendChristmas } = require('../message-respond/send-christmas');
 const { sendHalloween } = require('../message-respond/send-halloween')
 const { twosSystem } = require('../message-respond/twos-system');
-const { reactEmote, reactSpam } = require('../message-respond/react-emote');
+const { reactEmote, antiHiyaPapaya } = require('../message-respond/react-emote');
 const { sendEmbedFail } = require('../message-respond/send-embed-fail');
 const { sendFireworks } = require('../message-respond/send-newyears');
 
@@ -20,7 +20,7 @@ module.exports = {
 		// console.log('User send a message');
 
 		reactEmote(message);
-		reactSpam(message);
+		await antiHiyaPapaya(message);
 
 		// For bidoofis :)
 		if (message.content.includes("Bidoofis")) {
