@@ -1,7 +1,9 @@
 const MAX = 300;
+const KEYWORD = "hiya-papaya";
+
 
 async function reactEmote (message) {
-    if (getRandomInt(MAX) === 27) {
+    if (getRandomInt(MAX) === 27 || message.content.toLowerCase().includes(KEYWORD)) {
         message.react('🎑');
     }
 }
