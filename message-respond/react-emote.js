@@ -25,4 +25,5 @@ function getRandomInt(max) {
   
 module.exports = {
     reactEmote,
+    reactSpam,
 }
