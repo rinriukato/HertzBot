@@ -2,6 +2,7 @@ const { emotes } = require('../assets');
 const MAX = 300;
 const SPAM_KEYWORDS = [
                        "hiya-papaya",
+                       "hiya_papya",
                        "https://cdn.discordapp.com/attachments/804470066514231338/1075474545303097424/IMG_6671.png",
                        "https://tenor.com/view/fire-emblem-fire-emblem-engage-yunaka-hiya-papaya-gif-27462609",
                        "https://cdn.discordapp.com/attachments/580359012093132820/1075254106345721896/IMG_6671.jpg",
@@ -11,6 +12,7 @@ const SPAM_KEYWORDS = [
                        "https://tenor.com/view/fire-emblem-engage-fire-emblem-engage-yunaka-hiya-papaya-gif-27454439",
                        "https://cdn.discordapp.com/attachments/580359012093132820/1070818801299509388/SPOILER_Fn7k4zZaQAEFhRj-1.png",
                        "https://cdn.discordapp.com/attachments/777312166550175791/1075440147656622080/hiya_papya.gif",
+                       "https://media.discordapp.net/attachments/580359012093132820/1075440891243794503/hiya_papya.gif",
                     ]
 
 
