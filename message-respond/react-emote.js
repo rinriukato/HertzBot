@@ -13,13 +13,31 @@ const SPAM_KEYWORDS = [
                        "https://cdn.discordapp.com/attachments/580359012093132820/1070818801299509388/SPOILER_Fn7k4zZaQAEFhRj-1.png",
                        "https://cdn.discordapp.com/attachments/777312166550175791/1075440147656622080/hiya_papya.gif",
                        "https://media.discordapp.net/attachments/580359012093132820/1075440891243794503/hiya_papya.gif",
+                       "https://cdn.discordapp.com/attachments/775416760379244546/1075834312148135976/fire-emblem-fire-emblem-engage.gif",
+                       "https://media.discordapp.net/attachments/323824215281369090/1092994476017983548/rinri_smells.gif",
+                       "hiya-papaya",
+                       "yunaka-"
                     ]
 
 
 function reactEmote (message) {
+    
     if (getRandomInt(MAX) === 27) {
         message.react('🎑');
+        return;
     }
+
+    if (getRandomInt(1000) === 100) {
+        message.react('🤓')
+        return
+    }
+
+    if (getRandomInt(5000) === 1) {
+        message.reply("woah, i can't believe its mount fuji ||btw this is a rare 0.02% of occurring||")
+        message.react('🗻')
+        return
+    }
+
 }
 
 async function antiHiyaPapaya (message) {
