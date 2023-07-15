@@ -1,16 +1,19 @@
 // Necessary discord.js classes
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, GatewayIntentBits, Collection } = require('discord.js');
 const mongoose = require('mongoose');
 const { token } = require('./config.json');
 
 // New client instance
 const client = new Client({
-    intents: [
-        Intents.FLAGS.GUILDS,
-        Intents.FLAGS.GUILD_MESSAGES,
+
+   intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
     ]
+
 });
 
 client.commands = new Collection();

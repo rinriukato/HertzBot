@@ -23,6 +23,10 @@ module.exports = {
         ),
 
     async execute(interaction) {
+
+        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
+        return;
+
         const command = interaction.options.getString('command');
         const hertzImage = "https://cdn.discordapp.com/attachments/314926179020832768/1065375255633342464/Hertz_Help.png";
 

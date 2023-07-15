@@ -9,7 +9,11 @@ const { sendFireworks } = require('../message-respond/send-newyears');
 
 const iodosId = 655125193098002479;
 const REQUEST_LENGTH_MAX = 100;
+
+// temp spot, can't be bother lmao
 const rinri_name = "リグマ"
+const boom_image = "https://cdn.discordapp.com/attachments/804470066514231338/1129808178704560258/8675309.png";
+
 
 module.exports = {
 	name: 'messageCreate',
@@ -17,8 +21,6 @@ module.exports = {
 		
 		// Do not reply to self and ignore bot messages
 		if (message.author.id === client.user.id || message.author.bot === true) return;
-
-		// console.log('User send a message');
 
 		reactEmote(message);
 		await antiHiyaPapaya(message);
@@ -36,6 +38,7 @@ module.exports = {
 
 		if (message.content.includes(rinri_name) && message.content.includes('?')) {
 			await message.reply('リグマ・ボールズ');
+			await message.channel.send(boom_image);
 			return;
 		}
 

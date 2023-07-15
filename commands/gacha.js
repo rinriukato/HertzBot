@@ -24,6 +24,9 @@ module.exports = {
 	    .setDescription('Pull from the gachapon machine!'),
 
     async execute(interaction) {
+        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
+        return;
+
         const gachaEmbed = new MessageEmbed()
             .setColor(COLOR)
             .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)

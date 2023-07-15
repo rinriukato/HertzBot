@@ -23,6 +23,10 @@ module.exports = {
         .setName('rps')
         .setDescription('Play Rock-Paper-Scissors with Hertz!'),
     async execute(interaction) {
+
+        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
+        return;
+
         const options = new MessageActionRow()
             .addComponents(
                 new MessageButton()

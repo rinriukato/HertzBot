@@ -10,6 +10,10 @@ module.exports = {
         .setDescription('Displays server information'),
 
     async execute(interaction) {
+
+        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
+        return;
+
         const guild = await findGuildCreate(interaction.guild);
         const guildName = guild.guild_name;
 
