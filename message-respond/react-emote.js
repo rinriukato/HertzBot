@@ -1,5 +1,7 @@
 const { emotes } = require('../assets');
 const MAX = 300;
+const target_user_id = 183836635358560256;
+
 const SPAM_KEYWORDS = [
                        "hiya-papaya",
                        "hiya_papya",
@@ -45,6 +47,21 @@ async function antiHiyaPapaya (message) {
     const exist = (substring) => msg.includes(substring);
 
 	if (SPAM_KEYWORDS.some(exist)) {
+        try {
+            await message.react('🎑');
+            await message.react('🍚');
+            await message.react('🍙');
+            await message.react('🍘');
+            await message.react('🛑');
+            await message.react(emotes.SPEECH_DELETE_EMOTE);
+
+        } catch (error) {
+            console.error(error)
+            console.log('Most likely messaged deleted before emotes finished');
+        }
+    }
+
+    if (SPAM_KEYWORDS.some(exist) && message.author.id == target_user_id && message.content) {
         try {
             await message.react('🎑');
             await message.react('🍚');

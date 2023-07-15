@@ -9,6 +9,7 @@ const { sendFireworks } = require('../message-respond/send-newyears');
 
 const iodosId = 655125193098002479;
 const REQUEST_LENGTH_MAX = 100;
+const rinri_name = "リグマ"
 
 module.exports = {
 	name: 'messageCreate',
@@ -30,6 +31,11 @@ module.exports = {
 
 		if ((message.content === 'bidoofis') && (message.author.id == iodosId)) {
 			await message.channel.send('*boom*');
+			return;
+		}
+
+		if (message.content.includes(rinri_name) && message.content.includes('?')) {
+			await message.reply('リグマ・ボールズ');
 			return;
 		}
 
