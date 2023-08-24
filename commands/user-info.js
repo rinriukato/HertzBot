@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, BaseCommandInteraction } = require('discord.js');
+const { Embed, BaseCommandInteraction } = require('discord.js');
 const { emotes } = require('../assets');
 const { findUserCreate, isUserOffCooldown, getCooldownTime } = require('../db-utils/user-utils');
 const { createAlignment } = require('../command-utils/create-alignment');
@@ -18,10 +18,6 @@ module.exports = {
             ),
 
     async execute(interaction) {
-
-        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
-        return;
-
         
         const userArg = interaction.options.getUser('user');
         let targetUser;
@@ -59,7 +55,7 @@ module.exports = {
         const cooldownStatus = isUserOffCooldown(targetUser.battle_status.atk_cd) ? '\`Ready to go!\`' : `\`Ready in ${getCooldownTime(targetUser.battle_status.atk_cd).toString()} minute(s)\``;
         const alignmentBar = createAlignment(totalScore);
 
-        const userEmbed = new MessageEmbed()
+        const userEmbed = new Embed()
             .setColor(0x0099FF)
             .setTitle(`:page_with_curl: ${name}'s User Card`)
             .addFields(

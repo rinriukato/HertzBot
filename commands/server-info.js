@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { Embed } = require('discord.js');
 const { findGuildCreate } = require('../db-utils/guild-utils');
 const { emotes } = require('../assets');
 const header = ":blue_square::white_large_square::white_large_square::white_large_square::blue_square:";
@@ -11,13 +11,11 @@ module.exports = {
 
     async execute(interaction) {
 
-        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
-        return;
 
         const guild = await findGuildCreate(interaction.guild);
         const guildName = guild.guild_name;
 
-        const serverEmbed = new MessageEmbed()
+        const serverEmbed = new Embed()
             .setColor(0x007FFF)
             .setTitle(`:floppy_disk: [${guildName}] Server Card`)
             .addFields( 

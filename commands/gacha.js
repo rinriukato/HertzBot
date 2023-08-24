@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton, MessageEmbed, ButtonInteraction } = require('discord.js');
+const { MessageActionRow, Button, Embed, ButtonInteraction } = require('discord.js');
 const { emotes } = require('../assets');
 const { gachaResult } = require('../command-utils/gacha-rates');
 const { getCommonPrize } = require('../command-utils/get-common-prize');
@@ -27,7 +27,7 @@ module.exports = {
         interaction.reply("This command doesn't work because rinri is lazy. Sorry");
         return;
 
-        const gachaEmbed = new MessageEmbed()
+        const gachaEmbed = new Embed()
             .setColor(COLOR)
             .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
             .setDescription('Time to waste your money!')
@@ -86,7 +86,7 @@ module.exports = {
             const userMoney = getPlayerMoney(user);
 
             if (userMoney < PULL_COST) {
-                const noMoneyEmbed = new MessageEmbed()
+                const noMoneyEmbed = new Embed()
                     .setColor(COLOR)
                     .setTitle(`No Gacha Time?`)
                     .setDescription(`Looks you like you don't have enough money to put into the machine...\n Maybe next time?`);
@@ -110,7 +110,7 @@ module.exports = {
                 await setMoneySpent(guild, moneySpent=PULL_COST);
 
                 // Build result embed
-                const resultEmbed = new MessageEmbed()
+                const resultEmbed = new Embed()
                     .setColor(COLOR)
                     .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
 
@@ -172,7 +172,7 @@ module.exports = {
                 }
 
                 // Frame 1
-                const gachaEmbed = new MessageEmbed()
+                const gachaEmbed = new Embed()
                     .setColor(COLOR)
                     .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
                     .setDescription(`💨 ${emotes.GACHAPON} *plop~*`);

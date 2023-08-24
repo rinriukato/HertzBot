@@ -31,7 +31,12 @@ function reactEmote (message) {
 
     if (getRandomInt(1000) === 100) {
         message.react('🤓')
-        return
+        return;
+    }
+
+    if (getRandomInt(200) === 1) {
+        message.react(emotes.REN_BRUH_EMOTE)
+        return;
     }
 
     if (getRandomInt(5000) === 1) {
@@ -40,6 +45,11 @@ function reactEmote (message) {
         return
     }
 
+}
+
+function reactRen (message) {
+    message.react(emotes.REN_BRUH_EMOTE);
+    return;
 }
 
 async function antiHiyaPapaya (message) {
@@ -84,4 +94,5 @@ function getRandomInt(max) {
 module.exports = {
     reactEmote,
     antiHiyaPapaya,
+    reactRen,
 }

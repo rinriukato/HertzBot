@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, BaseCommandInteraction, Message } = require('discord.js');
+const { Embed, BaseCommandInteraction, Message } = require('discord.js');
 const { emotes } = require('../assets');
 const { findUserCreate } = require('../db-utils/user-utils');
 
@@ -14,8 +14,6 @@ module.exports = {
     ),
 
     async execute(interaction) {
-        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
-        return;
 
         const userArg = interaction.options.getUser('user');
         let targetUser;
@@ -40,7 +38,7 @@ module.exports = {
             targetUser.drinks_ordered.sake,
         ];
 
-        const userEmbed = new MessageEmbed()
+        const userEmbed = new Embed()
             .setColor(0xFFFDD0)
             .setTitle(`${username}'s drink history `)
             .addFields(

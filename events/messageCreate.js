@@ -3,7 +3,7 @@ const { requestDrink, giveDrink } = require('../message-respond/request-drink');
 const { sendChristmas } = require('../message-respond/send-christmas');
 const { sendHalloween } = require('../message-respond/send-halloween')
 const { twosSystem } = require('../message-respond/twos-system');
-const { reactEmote, antiHiyaPapaya } = require('../message-respond/react-emote');
+const { reactEmote, antiHiyaPapaya, reactRen } = require('../message-respond/react-emote');
 const { sendEmbedFail } = require('../message-respond/send-embed-fail');
 const { sendFireworks } = require('../message-respond/send-newyears');
 
@@ -24,6 +24,11 @@ module.exports = {
 
 		reactEmote(message);
 		await antiHiyaPapaya(message);
+		
+		if (message.content.includes('ren')) {
+			reactRen(message);
+			return;
+		}
 
 		// For bidoofis :)
 		if (message.content.includes("Bidoofis")) {

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const { emotes } = require(`../assets`);
 
 module.exports = {
@@ -24,8 +24,7 @@ module.exports = {
 
     async execute(interaction) {
 
-        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
-        return;
+
 
         const command = interaction.options.getString('command');
         const hertzImage = "https://cdn.discordapp.com/attachments/314926179020832768/1065375255633342464/Hertz_Help.png";
@@ -35,7 +34,7 @@ module.exports = {
             const helpMessage = `Hello, and welcome to my help page! For a more detailed look into the avaliable commands or one of my functions, use:
                                 \`/help <name of command>\``;
 
-            const helpEmbed = new MessageEmbed()
+            const helpEmbedBuilder = new EmbedBuilder()
             .setColor(0x228B22)
             .setTitle(`${emotes.HERTZ_EMOTE} Hertz's Help Page`)
             .setThumbnail(hertzImage)
@@ -63,13 +62,13 @@ module.exports = {
                 }
             )
 
-            await interaction.reply({ embeds: [helpEmbed] });
+            await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
             return;
         }
 
         switch (command) {
             case 'rps': {
-                const helpEmbed = new MessageEmbed()
+                const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Command help for rps`)
                 .setDescription(`Play a simple game of Rock-Paper-Scissors with Hertz!. Pick one of the options avaliable and Hertz (totally using advance AI) will make his choice as well. 
@@ -82,11 +81,11 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ embeds: [helpEmbed] });
+                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
                 return;
             }
             case 'gacha': {
-                const helpEmbed = new MessageEmbed()
+                const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Command help for gacha`)
                 .setDescription(`Insert a 100 :coin: for a pull at the gachapon! Rates and prizes are listed when using the commands`)
@@ -98,11 +97,11 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ embeds: [helpEmbed] });
+                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
                 return;
             }
             case 'daily': {
-                const helpEmbed = new MessageEmbed()
+                const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Command help for daily`)
                 .setDescription(`Recieve 100 Money. You can use this command again every 24-hour period since you've last used it.`)
@@ -114,11 +113,11 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ embeds: [helpEmbed] });
+                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
                 return;
             }
             case 'drink-history': {
-                const helpEmbed = new MessageEmbed()
+                const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Command help for drink-history`)
                 .setDescription(`A list of all the drinks the user has requested from Hertz. `)
@@ -135,11 +134,11 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ embeds: [helpEmbed] });
+                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
                 return;
             }
             case 'server-info': {
-                const helpEmbed = new MessageEmbed()
+                const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Command help for server-info`)
                 .setDescription(`Displays information Hertz has gathered about this server. Such as the amount of [+2] given out or the server's favorite drink!`)
@@ -151,11 +150,11 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ embeds: [helpEmbed] });
+                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
                 return;
             }
             case 'user-info': {
-                const helpEmbed = new MessageEmbed()
+                const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Command help for user-info`)
                 .setDescription(`Displays the user's information card. This will show infomation such as the user's rating, their favorite drink, and their rating alignment!`)
@@ -172,11 +171,11 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ embeds: [helpEmbed] });
+                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
                 break;
             }
             case 'drink-request': {
-                const helpEmbed = new MessageEmbed()
+                const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Explaination of the drink ordering system`)
                 .setDescription(`Hertz also doubles as a vending machine with a decent selection of drinks to choose from! Simply ask him and he'll go and despense the drink.`)
@@ -207,11 +206,11 @@ module.exports = {
                         },
                     )
                 
-                await interaction.reply({ embeds: [helpEmbed] });
+                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
                 break;
             }
             case '2s-rating': {
-                const helpEmbed = new MessageEmbed()
+                const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Explaination of [+2][-2] Rating System`)
                 .setDescription(
@@ -246,7 +245,7 @@ module.exports = {
                         },
                     )
                 
-                await interaction.reply({ embeds: [helpEmbed] });
+                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
                 return;
             }
         }

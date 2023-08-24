@@ -5,6 +5,9 @@ const TODD_EMOTE = "<:SmilingTODD_EMOTE:324707520272924684>";
 const HERTZ_EMOTE = "<:hertz:1064623739683213386>";
 const SPEECH_DELETE_EMOTE = "<:SpeachDelete:733058876265463899>";
 
+// Reaction Emotes
+const REN_BRUH_EMOTE = "<:RenBruh:870486915416223794>";
+
 // Emotes for Vending Machine
 const MILKIS_EMOTE = "<:MILKIS_EMOTE:712773145559302165>";
 const COLA_EMOTE = "<:cola:1001552143012085850> ";
@@ -41,4 +44,5 @@ module.exports = {
     BAR_G,
     BAR_O,
     GACHAPON,
+    REN_BRUH_EMOTE
 };
