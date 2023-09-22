@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, Button, Embed, ButtonInteraction } = require('discord.js');
+const { MessageActionRow, Button, EmbedBuilder, ButtonInteraction } = require('discord.js');
 const { emotes } = require('../assets');
 const { gachaResult } = require('../command-utils/gacha-rates');
 const { getCommonPrize } = require('../command-utils/get-common-prize');
@@ -24,10 +24,8 @@ module.exports = {
 	    .setDescription('Pull from the gachapon machine!'),
 
     async execute(interaction) {
-        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
-        return;
 
-        const gachaEmbed = new Embed()
+        const gachaEmbedBuilder = new EmbedBuilder()
             .setColor(COLOR)
             .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
             .setDescription('Time to waste your money!')
@@ -68,7 +66,7 @@ module.exports = {
                     .setEmoji('🪙')  // :coin:
             )
 
-        await interaction.reply({embeds: [gachaEmbed], components: [options] });
+        await interaction.reply({EmbedBuilders: [gachaEmbedBuilder], components: [options] });
 
         const filter = (buttonInteraction) => {
 
@@ -80,111 +78,121 @@ module.exports = {
 		const collector = interaction.channel.createMessageComponentCollector({filter, max: 1});
         
         const collectionHandler = async (ButtonInteraction) => {
-            const user = await findUserCreate(interaction.user ,interaction.guild);
+           /* DEVELOPER NOTES - 
+                Most of the code below has been commented out. It's is suppose to check if the user has 
+                enough money and write it to the database. Due to the database being non-functional,
+                I have disabled that check so the users can freely roll the gacha pon. I might 
+                re-enable this feature, but for now this was my solution
+           */
+           
+            // const user = await findUserCreate(interaction.user ,interaction.guild);
             
             // Check for money
-            const userMoney = getPlayerMoney(user);
+            // const userMoney = getPlayerMoney(user);
 
+            /*
             if (userMoney < PULL_COST) {
-                const noMoneyEmbed = new Embed()
+                const noMoneyEmbedBuilder = new EmbedBuilder()
                     .setColor(COLOR)
                     .setTitle(`No Gacha Time?`)
                     .setDescription(`Looks you like you don't have enough money to put into the machine...\n Maybe next time?`);
 
-                await interaction.editReply({embeds: [noMoneyEmbed], components: []});
+                await interaction.editReply({EmbedBuilders: [noMoneyEmbedBuilder], components: []});
+            */
+               
 
-            } else {    
+            // const guild = await findGuildCreate(interaction.guild);
+            const result = gachaResult();
+            
+            /*
+            // Update gachapon stats for User
+            await updatePlayerMoney(user, amount=PULL_COST, isNegative=true);
+            await incrementUserTotalRolls(user);
+            await incrementUserPons(user, ponType=result);
+            await setUserMoneySpent(user, moneySpent=PULL_COST);
 
-                const guild = await findGuildCreate(interaction.guild);
-                const result = gachaResult();
+            // Update Sever stats
+            await incrementTotalRolls(guild);
+            await incrementPons(guild, ponType=result);
+            await setMoneySpent(guild, moneySpent=PULL_COST);
+            */
 
-                // Update gachapon stats for User
-                await updatePlayerMoney(user, amount=PULL_COST, isNegative=true);
-                await incrementUserTotalRolls(user);
-                await incrementUserPons(user, ponType=result);
-                await setUserMoneySpent(user, moneySpent=PULL_COST);
+            // Build result EmbedBuilder
+            const resultEmbedBuilder = new EmbedBuilder()
+                .setColor(COLOR)
+                .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
 
-                // Update Sever stats
-                await incrementTotalRolls(guild);
-                await incrementPons(guild, ponType=result);
-                await setMoneySpent(guild, moneySpent=PULL_COST);
+            console.log(result);
+            switch (result) {
+                case 'Ultra Rare':
+                    await updatePlayerMoney(user, amount=25000, isNegative=false);
 
-                // Build result embed
-                const resultEmbed = new Embed()
-                    .setColor(COLOR)
-                    .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
+                    resultEmbedBuilder
+                        .setDescription(`WOAH! YOU GOT AN ULTRA RARE CAPSULE! That was 1 in 1000 chance!`)
+                        .addFields({
+                            name: '🪙🪙🪙🪙🪙🪙🪙🪙🪙🪙',
+                            value: '25,000 money has been added to your account!'
+                        });
+                    break;
 
-                console.log(result);
-                switch (result) {
-                    case 'Ultra Rare':
-                        await updatePlayerMoney(user, amount=25000, isNegative=false);
+                case 'Super Rare':
+                    await updatePlayerMoney(user, amount=1500, isNegative=false);
 
-                        resultEmbed
-                            .setDescription(`WOAH! YOU GOT AN ULTRA RARE CAPSULE! That was 1 in 1000 chance!`)
-                            .addFields({
-                                name: '🪙🪙🪙🪙🪙🪙🪙🪙🪙🪙',
-                                value: '25,000 money has been added to your account!'
-                            });
-                        break;
+                    resultEmbedBuilder
+                        .setDescription(`Amazing! You got a Super Rare capsule! Why, aren't you lucky?`)
+                        .addFields({
+                            name: '🪙🪙🪙🪙🪙',
+                            value: '1,500 money has been added to your account!'
+                        });
+                    break;
 
-                    case 'Super Rare':
-                        await updatePlayerMoney(user, amount=1500, isNegative=false);
+                case 'Rare':
+                    await updatePlayerMoney(user, amount=300, isNegative=false);
 
-                        resultEmbed
-                            .setDescription(`Amazing! You got a Super Rare capsule! Why, aren't you lucky?`)
-                            .addFields({
-                                name: '🪙🪙🪙🪙🪙',
-                                value: '1,500 money has been added to your account!'
-                            });
-                        break;
+                    resultEmbedBuilder
+                        .setDescription(`You got a Rare capsule!`)
+                        .addFields({
+                            name: '🪙🪙🪙',
+                            value: '300 money has been added to your account!'
+                        });
+                    break;
+                case 'Uncommon':
+                    await updatePlayerMoney(user, amount=100, isNegative=false);
 
-                    case 'Rare':
-                        await updatePlayerMoney(user, amount=300, isNegative=false);
+                    resultEmbedBuilder
+                        .setDescription(`You got an Uncommon capsule! At least you broken even...`)
+                        .addFields({
+                            name: '🪙🪙🪙',
+                            value: '100 money has been added to your account'
+                        });
+                    break;
 
-                        resultEmbed
-                            .setDescription(`You got a Rare capsule!`)
-                            .addFields({
-                                name: '🪙🪙🪙',
-                                value: '300 money has been added to your account!'
-                            });
-                        break;
-                    case 'Uncommon':
-                        await updatePlayerMoney(user, amount=100, isNegative=false);
+                case 'Common':
+                    const commonPrizeText = getCommonPrize();
 
-                        resultEmbed
-                            .setDescription(`You got an Uncommon capsule! At least you broken even...`)
-                            .addFields({
-                                name: '🪙🪙🪙',
-                                value: '100 money has been added to your account'
-                            });
-                        break;
-
-                    case 'Common':
-                        const commonPrizeText = getCommonPrize();
-
-                        resultEmbed
-                            .setDescription(`You got a Common capsule! Let's see whats inside...`)
-                            .addFields({
-                                name: commonPrizeText.toString(),
-                                value: ` `,
-                            });
-                        break;
-                }
-
-                // Frame 1
-                const gachaEmbed = new Embed()
-                    .setColor(COLOR)
-                    .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
-                    .setDescription(`💨 ${emotes.GACHAPON} *plop~*`);
-                await interaction.editReply({embeds: [gachaEmbed], components: []});
-
-                // Frame 2
-                gachaEmbed.setDescription('✨🌟✨');
-                setTimeout(() => interaction.editReply({ embeds: [gachaEmbed]}), ANIMATION_SPEED * 1000);
-
-                // Frame 3
-                setTimeout(() => interaction.editReply({ embeds: [resultEmbed]}), (ANIMATION_SPEED * 2) * 1000);
+                    resultEmbedBuilder
+                        .setDescription(`You got a Common capsule! Let's see whats inside...`)
+                        .addFields({
+                            name: commonPrizeText.toString(),
+                            value: ` `,
+                        });
+                    break;
             }
+
+            // Frame 1
+            const gachaEmbedBuilder = new EmbedBuilder()
+                .setColor(COLOR)
+                .setTitle(`${emotes.GACHAPON} **Gacha Time!** ${emotes.GACHAPON}`)
+                .setDescription(`💨 ${emotes.GACHAPON} *plop~*`);
+            await interaction.editReply({EmbedBuilders: [gachaEmbedBuilder], components: []});
+
+            // Frame 2
+            gachaEmbedBuilder.setDescription('✨🌟✨');
+            setTimeout(() => interaction.editReply({ EmbedBuilders: [gachaEmbedBuilder]}), ANIMATION_SPEED * 1000);
+
+            // Frame 3
+            setTimeout(() => interaction.editReply({ EmbedBuilders: [resultEmbedBuilder]}), (ANIMATION_SPEED * 2) * 1000);
+            //}
         }
 
 		collector.on('end', (ButtonInteraction) => collectionHandler(ButtonInteraction).catch(console.error));

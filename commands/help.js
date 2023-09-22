@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
 const { emotes } = require(`../assets`);
 
@@ -8,24 +8,21 @@ module.exports = {
 	    .setDescription(`Brief introduction of Hertz and the commands avaliable`)
         .addStringOption(option =>
             option.setName(`command`)
-            .setDescription('The name command or function you wish to learn about')
-            .setRequired(false)
-            .addChoices(
-                { name: 'rps', value: 'rps'},
-                { name: 'daily', value: 'daily'},
-                { name: 'gacha', value: 'gacha'},
-                { name: 'drink-history', value: 'drink-history'},
-                { name: 'server-info', value: 'server-info'},
-                { name: 'user-info', value: 'user-info'},
-                { name: '2s-rating', value: '2s-rating'},
-                { name: 'drink-request', value: 'drink-request'},
+                .setDescription('The name command or function you wish to learn about')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'rps', value: 'rps'},
+                    { name: 'daily', value: 'daily'},
+                    { name: 'gacha', value: 'gacha'},
+                    { name: 'drink-history', value: 'drink-history'},
+                    { name: 'server-info', value: 'server-info'},
+                    { name: 'user-info', value: 'user-info'},
+                    { name: '2s-rating', value: '2s-rating'},
+                    { name: 'drink-request', value: 'drink-request'},
             )
         ),
 
     async execute(interaction) {
-
-
-
         const command = interaction.options.getString('command');
         const hertzImage = "https://cdn.discordapp.com/attachments/314926179020832768/1065375255633342464/Hertz_Help.png";
 
@@ -62,7 +59,7 @@ module.exports = {
                 }
             )
 
-            await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+            await interaction.reply({ embeds: [helpEmbedBuilder] });
             return;
         }
 
@@ -81,7 +78,7 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+                await interaction.reply({ embeds: [helpEmbedBuilder] });
                 return;
             }
             case 'gacha': {
@@ -97,7 +94,7 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+                await interaction.reply({ embeds: [helpEmbedBuilder] });
                 return;
             }
             case 'daily': {
@@ -113,7 +110,7 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+                await interaction.reply({ embeds: [helpEmbedBuilder] });
                 return;
             }
             case 'drink-history': {
@@ -134,7 +131,7 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+                await interaction.reply({ embeds: [helpEmbedBuilder] });
                 return;
             }
             case 'server-info': {
@@ -150,7 +147,7 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+                await interaction.reply({ embeds: [helpEmbedBuilder] });
                 return;
             }
             case 'user-info': {
@@ -171,7 +168,7 @@ module.exports = {
                         }
                     )
                 
-                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+                await interaction.reply({ embeds: [helpEmbedBuilder] });
                 break;
             }
             case 'drink-request': {
@@ -206,7 +203,7 @@ module.exports = {
                         },
                     )
                 
-                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+                await interaction.reply({ embeds: [helpEmbedBuilder] });
                 break;
             }
             case '2s-rating': {
@@ -245,7 +242,7 @@ module.exports = {
                         },
                     )
                 
-                await interaction.reply({ EmbedBuilders: [helpEmbedBuilder] });
+                await interaction.reply({ embeds: [helpEmbedBuilder] });
                 return;
             }
         }

@@ -1,6 +1,8 @@
 const { emotes } = require('../assets');
-const MAX = 300;
-const target_user_id = 183836635358560256;
+
+const riceChance = 0.003;
+const nerdChance = 0.001;
+const fujiChance = 0.0001;
 
 const SPAM_KEYWORDS = [
                        "hiya-papaya",
@@ -18,33 +20,24 @@ const SPAM_KEYWORDS = [
                        "https://cdn.discordapp.com/attachments/775416760379244546/1075834312148135976/fire-emblem-fire-emblem-engage.gif",
                        "https://media.discordapp.net/attachments/323824215281369090/1092994476017983548/rinri_smells.gif",
                        "hiya-papaya",
-                       "yunaka-"
-                    ]
+                       "yunaka-",
+                     ]
 
 
 function reactEmote (message) {
-    
-    if (getRandomInt(MAX) === 27) {
+    if (randomChance(riceChance)) {
         message.react('🎑');
         return;
     }
 
-    if (getRandomInt(1000) === 100) {
+    if (randomChance(nerdChance)) {
         message.react('🤓')
-        return;
     }
 
-    if (getRandomInt(200) === 1) {
-        message.react(emotes.REN_BRUH_EMOTE)
-        return;
-    }
-
-    if (getRandomInt(5000) === 1) {
-        message.reply("woah, i can't believe its mount fuji ||btw this is a rare 0.02% of occurring||")
+    if (randomChance(fujiChance)) {
+        message.reply("woah, i can't believe its mount fuji ||this is a rare 0.01% of occurring||")
         message.react('🗻')
-        return
     }
-
 }
 
 function reactRen (message) {
@@ -70,25 +63,12 @@ async function antiHiyaPapaya (message) {
             console.log('Most likely messaged deleted before emotes finished');
         }
     }
-
-    if (SPAM_KEYWORDS.some(exist) && message.author.id == target_user_id && message.content) {
-        try {
-            await message.react('🎑');
-            await message.react('🍚');
-            await message.react('🍙');
-            await message.react('🍘');
-            await message.react('🛑');
-            await message.react(emotes.SPEECH_DELETE_EMOTE);
-
-        } catch (error) {
-            console.error(error)
-            console.log('Most likely messaged deleted before emotes finished');
-        }
-    }
 }
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+function randomChance(percent_chance) {
+    res = Math.random() < percent_chance;
+    console.log(res);
+    return res;
 }
   
 module.exports = {
