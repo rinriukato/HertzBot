@@ -1,20 +1,14 @@
 // Rates
-const ULTRA_RARE = 0.001;
-const SUPER_RARE = 0.003;
-const RARE = 0.01;
-const UNCOMMON = 0.35;
-//const COMMON = 0.5;
+const GIGA_RATE = 0.001;
+const MEGA_RATE = 0.1;
 
 
 function gachaResult () {
     const result = Math.random();
-    console.log(result);
-
-    if (result <= ULTRA_RARE) return 'Ultra Rare'
-    if (result <= SUPER_RARE) return 'Super Rare';
-    if (result <= RARE) return 'Rare';
-    if (result <= UNCOMMON) return 'Uncommon';
-    if (result > UNCOMMON) return 'Common';
+    
+    if (result <= GIGA_RATE) return 'G';
+    if (result <= MEGA_RATE) return 'M';
+    if (result > MEGA_RATE) return 'S';
 
 }
 

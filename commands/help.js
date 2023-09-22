@@ -85,7 +85,7 @@ module.exports = {
                 const helpEmbedBuilder = new EmbedBuilder()
                 .setColor(0x228B22)
                 .setTitle(`${emotes.HERTZ_EMOTE} Command help for gacha`)
-                .setDescription(`Insert a 100 :coin: for a pull at the gachapon! Rates and prizes are listed when using the commands`)
+                .setDescription(`Pull the gachapon machine for various prizes! Rates and prizes are listed when using the commands`)
                 .addFields(
                         {
                             name: `**Usage**`,
