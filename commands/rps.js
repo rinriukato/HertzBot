@@ -25,31 +25,32 @@ module.exports = {
     async execute(interaction) {
 
         const rock = new ButtonBuilder()
-        .setCustomId('r')
-        .setLabel('Rock!')
-        .setStyle(ButtonStyle.Primary)
-        .setEmoji('✊')
+            .setCustomId('r')
+            .setLabel('Rock!')
+            .setStyle(ButtonStyle.Primary)
+            //.setEmoji('✊')
 
         const paper = new ButtonBuilder()
             .setCustomId('p')
             .setLabel('Paper!')
             .setStyle(ButtonStyle.Primary)
-            .setEmoji('✋')
+            //.setEmoji('✋')
 
         const scissors = new ButtonBuilder()
             .setCustomId('s')
             .setLabel('Scissors!')
             .setStyle(ButtonStyle.Primary)
-            .setEmoji('✌')
+            //.setEmoji('✌')
         
-        const row = new ActionRowBuilder(rock, paper, scissors);
+        const row = new ActionRowBuilder()
+            .addComponents(rock, paper, scissors);
 
         const response = await interaction.reply({
-            content: "Lets play Rock-Paper-Scissors!",
+            content: 'Lets play Rock-Paper-Scissors!',
             components: [row]
         });
 
-        const collectionFilter = i => i.user.id === interaction.user.id;
+        const collectorFilter = i => i.user.id === interaction.user.id;
 
         try {
             const confirmation = await response.awaitMessageComponent({filter: collectorFilter, time: 60_000});
@@ -98,9 +99,73 @@ module.exports = {
             }
 
         } catch (e) {
-            console.error(e)
+            console.error(e) 
             await interaction.reply('This interaction has timed out after 1 minute.')
         }
     }
 }
+        /*
 
+		await interaction.reply({ content: 'Lets play Rock-Paper-Scissors!',  components: [options] });
+
+		const filter = (buttonInteraction) => {
+
+			if (interaction.user.id === buttonInteraction.user.id) return true;
+
+            buttonInteraction.reply({content: "This isn't your game!", ephemeral: true});
+			return false 
+		};
+
+		const collector = interaction.channel.createMessageComponentCollector({filter, max: 1});
+
+        const collectionHandler = async (ButtonInteraction) => {
+            const id = ButtonInteraction.first().customId;
+            let playerMove;
+
+			if (id === 'r') {
+                await interaction.editReply({
+                    content: 'You picked ✊',
+                    components: [],
+                })
+                playerMove = 0;
+            }
+			if (id === 'p') {
+                await interaction.editReply({
+                    content: 'You picked ✋',
+                    components: [],
+                })
+                playerMove = 1;
+            }
+			if (id === 's') {
+                await interaction.editReply({
+                    content: 'You picked ✌',
+                    components: [],
+                })
+                playerMove = 2;
+            }
+            
+            await interaction.channel.send('Hertz selects...');
+            
+            const botMove = Math.floor(Math.random() * 3);
+            const result = rpsResults[playerMove][botMove];
+
+            if (result === 0) {
+                await interaction.channel.send({
+                    content: `${moveToString(botMove)} Its a draw!`
+                });
+            }
+            else if (result === 1) {
+                await interaction.channel.send({
+                    content: `${moveToString(botMove)} You've won!`
+                });
+            }
+            else if (result === 2) {
+                await interaction.channel.send({
+                    content: `${moveToString(botMove)}! You've lost!`
+                });
+            }
+        }
+        
+		collector.on('end', (ButtonInteraction) => collectionHandler(ButtonInteraction).catch(console.error));
+    },
+    */
