@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageActionRow, MessageButton, MessageEmbed, ButtonInteraction } = require('discord.js');
+const { ButtonBuilder, ActionRowBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder, ButtonStyle } = require('discord.js');
 
 // Rock == 0
 // Paper == 1
@@ -24,69 +24,60 @@ module.exports = {
         .setDescription('Play Rock-Paper-Scissors with Hertz!'),
     async execute(interaction) {
 
-        interaction.reply("This command doesn't work because rinri is lazy. Sorry");
-        return;
+        const rock = new ButtonBuilder()
+        .setCustomId('r')
+        .setLabel('Rock!')
+        .setStyle(ButtonStyle.Primary)
+        .setEmoji('✊')
 
-        const options = new MessageActionRow()
-            .addComponents(
-                new MessageButton()
-                    .setCustomId('rock')
-                    .setLabel('Rock!')
-                    .setStyle('PRIMARY')
-                    .setEmoji('✊'),
-                new MessageButton()
-                    .setCustomId('paper')
-                    .setLabel('Paper!')
-                    .setStyle('PRIMARY')
-                    .setEmoji('✋'),
-                new MessageButton()
-                    .setCustomId('scissors')
-                    .setLabel('Scissors!')
-                    .setStyle('PRIMARY')
-                    .setEmoji('✌'),
-            )
-		
-		
-		await interaction.reply({ content: 'Lets play Rock-Paper-Scissors!',  components: [options] });
+        const paper = new ButtonBuilder()
+            .setCustomId('p')
+            .setLabel('Paper!')
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji('✋')
 
-		const filter = (buttonInteraction) => {
+        const scissors = new ButtonBuilder()
+            .setCustomId('s')
+            .setLabel('Scissors!')
+            .setStyle(ButtonStyle.Primary)
+            .setEmoji('✌')
+        
+        const row = new ActionRowBuilder(rock, paper, scissors);
 
-			if (interaction.user.id === buttonInteraction.user.id) return true;
+        const response = await interaction.reply({
+            content: "Lets play Rock-Paper-Scissors!",
+            components: [row]
+        });
 
-            buttonInteraction.reply({content: "This isn't your game!", ephemeral: true});
-			return false 
-		};
+        const collectionFilter = i => i.user.id === interaction.user.id;
 
-		const collector = interaction.channel.createMessageComponentCollector({filter, max: 1});
-
-        const collectionHandler = async (ButtonInteraction) => {
-            const id = ButtonInteraction.first().customId;
+        try {
+            const confirmation = await response.awaitMessageComponent({filter: collectorFilter, time: 60_000});
             let playerMove;
 
-			if (id === 'rock') {
+            if (confirmation.customId === 'r') {
                 await interaction.editReply({
                     content: 'You picked ✊',
                     components: [],
                 })
                 playerMove = 0;
             }
-			if (id === 'paper') {
+			if (confirmation.customId === 'p') {
                 await interaction.editReply({
                     content: 'You picked ✋',
                     components: [],
                 })
                 playerMove = 1;
             }
-			if (id === 'scissors') {
+			if (confirmation.customId === 's') {
                 await interaction.editReply({
                     content: 'You picked ✌',
                     components: [],
                 })
                 playerMove = 2;
             }
-            
+
             await interaction.channel.send('Hertz selects...');
-            
             const botMove = Math.floor(Math.random() * 3);
             const result = rpsResults[playerMove][botMove];
 
@@ -105,8 +96,11 @@ module.exports = {
                     content: `${moveToString(botMove)}! You've lost!`
                 });
             }
+
+        } catch (e) {
+            console.error(e)
+            await interaction.reply('This interaction has timed out after 1 minute.')
         }
-        
-		collector.on('end', (ButtonInteraction) => collectionHandler(ButtonInteraction).catch(console.error));
-    },
-};
+    }
+}
+
