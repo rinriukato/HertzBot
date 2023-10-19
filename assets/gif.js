@@ -1,5 +1,14 @@
 const CHRISTMAS_LIGHTS = "https://cdn.discordapp.com/attachments/294208622865416193/507184582744080384/lights.gif";
 
+// Pudding Gifs
+const PROOF_GIFS = [
+                        "https://tenor.com/view/pudding-dessert-cute-gif-27207414",
+                        "https://tenor.com/view/armstrong-made-it-up-gif-25653819",
+                        "https://tenor.com/view/pompompurin-smash-body-spoon-pudding-gif-17145386",
+                        "https://tenor.com/view/dessert-jelly-pudding-wobble-gif-16360451",
+                        "https://tenor.com/view/ditto-pudding-gif-26831376",
+                ];
+
 // Embed Fail Gifs
 const EMBED_FAIL_GIFS = [ 
                             "https://tenor.com/view/cat-fall-epic-embed-fail-fail-funny-gif-21341768",
@@ -20,4 +29,5 @@ const EMBED_FAIL_GIFS = [
 module.exports = {
     CHRISTMAS_LIGHTS,
     EMBED_FAIL_GIFS,
+    PROOF_GIFS,
 };

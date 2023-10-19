@@ -5,6 +5,7 @@ const { sendHalloween } = require('../message-respond/send-halloween')
 const { twosSystem } = require('../message-respond/twos-system');
 const { reactEmote, antiHiyaPapaya, reactRen } = require('../message-respond/react-emote');
 const { sendEmbedFail } = require('../message-respond/send-embed-fail');
+const { sendProofGif } = require('../message-respond/send-pudding-gif');
 const { sendFireworks } = require('../message-respond/send-newyears');
 
 const iodosId = 655125193098002479;
@@ -33,6 +34,15 @@ module.exports = {
 		// For bidoofis :)
 		if (message.content.includes("Bidoofis")) {
 			message.reply('bidoofis*');
+			return;
+		}
+
+		if (message.content.toLowerCase().includes("proof?")) {
+			if (Math.floor(Math.random() >= 0.3)) {
+				await message.reply("It's in the pudding.");
+			} else {
+				sendProofGif(message);
+			}
 			return;
 		}
 
