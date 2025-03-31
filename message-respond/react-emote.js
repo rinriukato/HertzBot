@@ -45,6 +45,10 @@ function reactRen (message) {
     return;
 }
 
+function reactCurly (message) {
+    message.react(emotes.CURLY_EMOTE)
+}
+
 async function antiHiyaPapaya (message) {
     const msg = message.content
     const exist = (substring) => msg.includes(substring);
@@ -75,4 +79,5 @@ module.exports = {
     reactEmote,
     antiHiyaPapaya,
     reactRen,
+    reactCurly,
 }

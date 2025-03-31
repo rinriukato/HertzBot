@@ -25,9 +25,9 @@ module.exports = {
 
 		reactEmote(message);
 		await antiHiyaPapaya(message);
-		
-		if (message.content.includes('ren')) {
-			reactRen(message);
+
+		if (message.content.includes('dog')) {
+			reactCurly(message);
 			return;
 		}
 

@@ -7,6 +7,7 @@ const SPEECH_DELETE_EMOTE = "<:SpeachDelete:733058876265463899>";
 
 // Reaction Emotes
 const REN_BRUH_EMOTE = "<:RenBruh:870486915416223794>";
+const CURLY_EMOTE = "<:curly:1356313274957693028>";
 
 // Emotes for Vending Machine
 const MILKIS_EMOTE = "<:MILKIS_EMOTE:712773145559302165>";
@@ -44,5 +45,6 @@ module.exports = {
     BAR_G,
     BAR_O,
     GACHAPON,
-    REN_BRUH_EMOTE
+    REN_BRUH_EMOTE,
+    CURLY_EMOTE,
 };
